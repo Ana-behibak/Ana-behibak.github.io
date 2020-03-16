@@ -1,30 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>创建博客</title>
-    <url>/2020/03/16/%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<p>####happy</p>
+    <title>解决国内安装npm速度慢的问题</title>
+    <url>/2020/03/16/%E8%A7%A3%E5%86%B3%E5%9B%BD%E5%86%85%E5%AE%89%E8%A3%85npm%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>由于node安装插件是从国外服务器下载，受网络影响大，速度慢且可能出现异常。</p>
+<hr>
+<p>在安装时可以手动指定从哪个镜像服务器获取资源，我们可以使用阿里巴巴在国内的镜像服务器，命令如下（以安装webpack为例）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -gd webpack --registry=http://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>只需要使用–registry参数指定镜像服务器地址，为了避免每次安装都需要–registry参数，可以使用如下命令进行永久设置：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm config --registry=http://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>解决问题</category>
+      </categories>
+      <tags>
+        <tag>npm</tag>
+        <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>navicat试用期过期问题</title>
+    <url>/2019/09/08/navicat%E8%AF%95%E7%94%A8%E6%9C%9F%E8%BF%87%E6%9C%9F%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>数据库工具：Navicat<br>试用期过期处理方法</p>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux下Navicat是通过脚本启动的，因此很容易在运行之前插一个脚本，由这个脚本来重置试用期<br>注意脚本是Python3的，每次运行均会重置试用期到14天，要求64位版Navicat<br>插在Navicat启动脚本之前即可</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">import os</span><br><span class="line">import re</span><br><span class="line"></span><br><span class="line"><span class="comment"># 试用时间重置的正则</span></span><br><span class="line">ps = (</span><br><span class="line">        re.compile(r<span class="string">'\[Software\\\\PremiumSoft\\\\Data\\\\\&#123;[^\&#125;]*\&#125;\\\\Info\].*?\n[^\[]*'</span>),</span><br><span class="line">        re.compile(r<span class="string">'\[Software\\\\Classes\\\\CLSID\\\\\&#123;[^\&#125;]*\&#125;\\\\Info\].*?\n[^\[]*'</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="comment"># user.reg 的路径</span></span><br><span class="line">regfile = os.path.join(os.environ[<span class="string">'HOME'</span>], <span class="string">'.navicat64'</span>, <span class="string">'user.reg'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 正则替换</span></span><br><span class="line">with open(regfile, <span class="string">'r+'</span>) as f:</span><br><span class="line">    regstr = f.read()</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> ps:</span><br><span class="line">        regstr = p.sub(lambda m: <span class="string">''</span>, regstr)</span><br><span class="line"></span><br><span class="line">    f.seek(0, 0)</span><br><span class="line">    f.truncate()</span><br><span class="line">    f.write(regstr)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>Windows用的注册表，感觉略麻烦。</p>
+<ol>
+<li>关闭Navicat</li>
+<li>Win + R，输入regedit回车</li>
+<li>删除HKEY_CURRENT_USER\Software\PremiumSoft\Data</li>
+<li>展开HKEY_CURRENT_USER\Software\Classes\CLSID</li>
+<li>展开每一个子文件夹，如果里面只包含一个名为Info的文件夹，就删掉它。 </li>
+</ol>
+<p>原文链接：<a href="https://blog.csdn.net/yyx3214/article/details/79428582" target="_blank" rel="noopener">https://blog.csdn.net/yyx3214/article/details/79428582</a></p>
 ]]></content>
+      <categories>
+        <category>解决问题</category>
+        <category>工具过期</category>
+      </categories>
+      <tags>
+        <tag>Navicat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于网页开发工具Jupyter</title>
+    <url>/2019/07/07/%E5%9F%BA%E4%BA%8E%E7%BD%91%E9%A1%B5%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7Jupyter/</url>
+    <content><![CDATA[<p>Jupyter Notebook是基于网页的用于交互计算的应用程序。其可被应用于全过程计算：开发、文档编写、运行代码和展示结果。</p>
+<p>前提：安装完成并配置好环境</p>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>打开命令行，更改到想要执行的文件夹下</p>
+<p>在终端中输入以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure>
+
+<p>执行命令之后，在终端中将会显示一系列notebook的服务器信息，同时浏览器将会自动启动Jupyter Notebook。</p>
+<p>启动过程中终端显示内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">D:\workspace&gt;jupyter notebook</span><br><span class="line">[I 16:20:40.367 NotebookApp] Serving notebooks from <span class="built_in">local</span> directory: D:\workspace\blog\zhaoyifanBlog</span><br><span class="line">[I 16:20:40.367 NotebookApp] The Jupyter Notebook is running at:</span><br><span class="line">[I 16:20:40.369 NotebookApp] http://localhost:8888/?token=d6f7f5a9727a9f8e33529ec7884520e93a7583233778990f</span><br><span class="line">[I 16:20:40.373 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).</span><br><span class="line">[C 16:20:40.425 NotebookApp]</span><br><span class="line"></span><br><span class="line">    To access the notebook, open this file <span class="keyword">in</span> a browser:</span><br><span class="line">        file:///C:/Users/%E7%BB%8F%E5%B9%B4/AppData/Roaming/jupyter/runtime/nbserver-1652-open.html</span><br><span class="line">    Or copy and paste one of these URLs:</span><br><span class="line">        http://localhost:8888/?token=d6f7f5a9727a9f8e33529ec7884520e93a7583233778990f</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器打开它给出路径即可操作</p>
+<p>注意：之后在Jupyter Notebook的所有操作，都请保持终端不要关闭，因为一旦关闭终端，就会断开与本地服务器的链接，你将无法在Jupyter Notebook中进行其他操作啦。</p>
+<p>新建的python文件可以单行运行（按下enter+shift）</p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>Jupyter</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于Session和Cookies</title>
+    <url>/2019/07/07/%E5%85%B3%E4%BA%8ESession%E5%92%8CCookies/</url>
+    <content><![CDATA[<p>Cookie通过在客户端记录信息确定用户身份，Session通过在服务器端记录信息确定用户身份。</p>
+<h2 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h2><p>cookie的内容主要包括：名字，值，过期时间，路径和域。路径与域一起构成cookie的作用范围。</p>
+<p>1）Name 和 Value 属性由程序设定,默认值都是空引用。</p>
+<p>2）Domain属性的默认值为当前URL的域名部分，不管发出这个cookie的页面在哪个目录下的。</p>
+<p>3）Path属性的默认值是根目录，即 ”/” ，不管发出这个cookie的页面在哪个目录下的。可以由程序设置为一定的路径来进一步限制此cookie的作用范围。</p>
+<p>4）Expires 属性，这个属性设置此Cookie 的过期日期和时间。</p>
+<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><p>session是另一种记录客户状态的机制，不同的是cookie保存在客户端浏览器中，而session保存在服务器上。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上，这就是session。客户端浏览器再次访问时只需要从该session中查找该客户的状态就可以了。session相当于程序在服务器上建立的一份用户的档案，用户来访的时候只需要查询用户档案表就可以了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>1、cookie数据存放在客户的浏览器上，session数据放在服务器上。</p>
+<p>2、cookie不是很安全，别人可以分析存放在本地的cookie并进行cookie欺骗，考虑到安全应当使用session。</p>
+<p>3、session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能，考虑到减轻服务器性能方面，应当使用cookie。</p>
+<p>4、单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie。</p>
+<p>5、可以考虑将登陆信息等重要信息存放为session，其他信息如果需要保留，可以放在cookie中</p>
+]]></content>
+      <categories>
+        <category>知识点</category>
+      </categories>
+      <tags>
+        <tag>cookies</tag>
+        <tag>session</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>创建博客</title>
+    <url>/2019/03/16/%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<p>This theme is diaspora, I download it from <a href="https://hexo.io/themes/" target="_blank" rel="noopener">this website</a>.<br>Here are some information about how to use this theme.</p>
+<h2 id="New-article-template"><a href="#New-article-template" class="headerlink" title="New article template"></a>New article template</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: My awesome title</span><br><span class="line">categories: </span><br><span class="line">    - 分类1</span><br><span class="line">    - 分类2</span><br><span class="line">tags: </span><br><span class="line">    - 标签1</span><br><span class="line">    - 标签2</span><br><span class="line">mp3: http://domain.com/awesome.mp3</span><br><span class="line">cover: http://domain.com/awesome.jpg</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Create-a-new-page"><a href="#Create-a-new-page" class="headerlink" title="Create a new page"></a>Create a new page</h3><p>1.create a new page, give it a name</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new page categories</span><br></pre></td></tr></table></figure>
+
+<p>2.edit this page</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">title: name</span><br><span class="line"><span class="built_in">type</span>: <span class="string">""</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>操作</category>
+      </categories>
       <tags>
         <tag>blog</tag>
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2020/03/16/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+    <title>如何写md格式的文档</title>
+    <url>/2019/03/16/%E5%A6%82%E4%BD%95%E5%86%99md%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E6%A1%A3/</url>
+    <content><![CDATA[<p>编辑器Markdown是一种纯文本格式的标记语言。通过简单的标记语法，它可以使普通文本内容具有一定的格式。</p>
+<h3 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h3><p>标题其实和HTML中的h系列很像，想要设置为标题的文字前面加#来表示<br>一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。</p>
+<p><em>注：标准语法一般在#后跟个空格再写文字</em></p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 这是一级标题</span><br><span class="line">## 这是二级标题</span><br><span class="line">### 这是三级标题</span><br><span class="line">#### 这是四级标题</span><br><span class="line">##### 这是五级标题</span><br><span class="line">###### 这是六级标题</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="2-字体"><a href="#2-字体" class="headerlink" title="2.字体"></a>2.字体</h3><h4 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a>加粗</h4><p>要加粗的文字左右分别用两个*号包起来</p>
+<h4 id="斜体"><a href="#斜体" class="headerlink" title="斜体"></a>斜体</h4><p>要倾斜的文字左右分别用一个*号或者用_包起来</p>
+<h4 id="斜体加粗"><a href="#斜体加粗" class="headerlink" title="斜体加粗"></a>斜体加粗</h4><p>要倾斜和加粗的文字左右分别用三个*号包起来</p>
+<h4 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h4><p>要加删除线的文字左右分别用两个~~号包起来</p>
+<h3 id="3-引用"><a href="#3-引用" class="headerlink" title="3.引用"></a>3.引用</h3><p>在引用的文字前加&gt;即可。引用也可以嵌套，如加两个&gt;&gt;三个&gt;&gt;&gt;</p>
+<h3 id="4-分割线"><a href="#4-分割线" class="headerlink" title="4.分割线"></a>4.分割线</h3><p>三个或者三个以上的 - 或者 * 都可以。</p>
+<h3 id="5-图片"><a href="#5-图片" class="headerlink" title="5.图片"></a>5.图片</h3><p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![图片alt](图片地址 &#39;&#39;图片title&#39;&#39;)</span><br><span class="line"></span><br><span class="line">图片alt就是显示在图片下面的文字，相当于对图片内容的解释。</span><br><span class="line">图片title是图片的标题，当鼠标移到图片上时显示的内容。title可加可不加</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="6-超链接"><a href="#6-超链接" class="headerlink" title="6.超链接"></a>6.超链接</h3><p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[超链接名](超链接地址 &quot;超链接title&quot;)</span><br><span class="line">title可加可不加</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="7-列表"><a href="#7-列表" class="headerlink" title="7.列表"></a>7.列表</h3><h4 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h4><p>语法：<br>用 - + * 任何一种都可以</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">- 列表内容</span><br><span class="line">+ 列表内容</span><br><span class="line">* 列表内容</span><br><span class="line"></span><br><span class="line">注意：- + * 跟内容之间都要有一个空格</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
+<h4 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h4><p>语法：<br>数字加点</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1.列表内容</span><br><span class="line">2.列表内容</span><br><span class="line">3.列表内容</span><br><span class="line"></span><br><span class="line">注意：序号跟内容之间要有空格</span><br></pre></td></tr></table></figure>
+
+<h4 id="嵌套列表"><a href="#嵌套列表" class="headerlink" title="嵌套列表"></a>嵌套列表</h4><p>上一级和下一级之间敲三个空格即可</p>
+<h3 id="8-表格"><a href="#8-表格" class="headerlink" title="8.表格"></a>8.表格</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">表头|表头|表头</span><br><span class="line">---|:--:|---:</span><br><span class="line">内容|内容|内容</span><br><span class="line">内容|内容|内容</span><br><span class="line"></span><br><span class="line">第二行分割表头和内容。</span><br><span class="line">- 有一个就行，为了对齐，多加了几个</span><br><span class="line">文字默认居左</span><br><span class="line">-两边加：表示文字居中</span><br><span class="line">-右边加：表示文字居右</span><br><span class="line">注：原生的语法两边都要用 | 包起来。此处省略</span><br></pre></td></tr></table></figure>
+
+<p>文字颜色——内置HTML</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;font color&#x3D;#00ffff size&#x3D;72 face&#x3D;&quot;黑体&quot;color&#x3D;#00ffff&lt;&#x2F;font&gt;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>写法</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
   </entry>
 </search>
