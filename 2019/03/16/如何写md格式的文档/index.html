@@ -11,7 +11,7 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
     <meta name="description" content="编辑器Markdown是一种纯文本格式的标记语言。通过简单的标记语法，它可以使普通文本内容具有一定的格式。
-1.标题标题其实和HTML中的h系列很像，想要设置为标题的文字前面加#来表示一个#是一级标,"> 
+标题标题其实和HTML中的h系列很像，想要设置为标题的文字前面加#来表示一个#是一级标题，,"> 
     <meta name="author" content="Jin Nian"> 
     <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -66,34 +66,44 @@
         </div>
         <div class="content markdown">
             <p>编辑器Markdown是一种纯文本格式的标记语言。通过简单的标记语法，它可以使普通文本内容具有一定的格式。</p>
-<h3 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h3><p>标题其实和HTML中的h系列很像，想要设置为标题的文字前面加#来表示<br>一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。</p>
+<h3 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h3><p>标题其实和HTML中的h系列很像，想要设置为标题的文字前面加#来表示<br>一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。</p>
 <p><em>注：标准语法一般在#后跟个空格再写文字</em></p>
 <p>示例：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 这是一级标题</span><br><span class="line">## 这是二级标题</span><br><span class="line">### 这是三级标题</span><br><span class="line">#### 这是四级标题</span><br><span class="line">##### 这是五级标题</span><br><span class="line">###### 这是六级标题</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-字体"><a href="#2-字体" class="headerlink" title="2.字体"></a>2.字体</h3><h4 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a>加粗</h4><p>要加粗的文字左右分别用两个*号包起来</p>
+<h3 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h3><h4 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a>加粗</h4><p>要加粗的文字左右分别用两个*号包起来</p>
 <h4 id="斜体"><a href="#斜体" class="headerlink" title="斜体"></a>斜体</h4><p>要倾斜的文字左右分别用一个*号或者用_包起来</p>
 <h4 id="斜体加粗"><a href="#斜体加粗" class="headerlink" title="斜体加粗"></a>斜体加粗</h4><p>要倾斜和加粗的文字左右分别用三个*号包起来</p>
 <h4 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h4><p>要加删除线的文字左右分别用两个~~号包起来</p>
-<h3 id="3-引用"><a href="#3-引用" class="headerlink" title="3.引用"></a>3.引用</h3><p>在引用的文字前加&gt;即可。引用也可以嵌套，如加两个&gt;&gt;三个&gt;&gt;&gt;</p>
-<h3 id="4-分割线"><a href="#4-分割线" class="headerlink" title="4.分割线"></a>4.分割线</h3><p>三个或者三个以上的 - 或者 * 都可以。</p>
-<h3 id="5-图片"><a href="#5-图片" class="headerlink" title="5.图片"></a>5.图片</h3><p>语法：</p>
+<h4 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h4><p>输入法换成全角，点两个空格即可。</p>
+<h4 id="文字颜色"><a href="#文字颜色" class="headerlink" title="文字颜色"></a>文字颜色</h4><p>内置HTML</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;font color&#x3D;#00ffff size&#x3D;72 face&#x3D;&quot;黑体&quot;&gt;&lt;&#x2F;font&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>在引用的文字前加&gt;即可。引用也可以嵌套，如加两个&gt;&gt;三个&gt;&gt;&gt;<br>加空行就在上一个文本之后打两个以上空格。</p>
+<h3 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h3><p>三个或者三个以上的 - 或者 * 都可以。</p>
+<h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p>语法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">![图片alt](图片地址 &#39;&#39;图片title&#39;&#39;)</span><br><span class="line"></span><br><span class="line">图片alt就是显示在图片下面的文字，相当于对图片内容的解释。</span><br><span class="line">图片title是图片的标题，当鼠标移到图片上时显示的内容。title可加可不加</span><br></pre></td></tr></table></figure>
 
-<h3 id="6-超链接"><a href="#6-超链接" class="headerlink" title="6.超链接"></a>6.超链接</h3><p>语法：</p>
+<h3 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h3><p>语法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[超链接名](超链接地址 &quot;超链接title&quot;)</span><br><span class="line">title可加可不加</span><br></pre></td></tr></table></figure>
 
-<h3 id="7-列表"><a href="#7-列表" class="headerlink" title="7.列表"></a>7.列表</h3><h4 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h4><p>语法：<br>用 - + * 任何一种都可以</p>
+<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><h4 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h4><p>语法：<br>用 - + * 任何一种都可以</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 列表内容</span><br><span class="line">+ 列表内容</span><br><span class="line">* 列表内容</span><br><span class="line"></span><br><span class="line">注意：- + * 跟内容之间都要有一个空格</span><br></pre></td></tr></table></figure>
 
 <h4 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h4><p>语法：<br>数字加点</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.列表内容</span><br><span class="line">2.列表内容</span><br><span class="line">3.列表内容</span><br><span class="line"></span><br><span class="line">注意：序号跟内容之间要有空格</span><br></pre></td></tr></table></figure>
 
 <h4 id="嵌套列表"><a href="#嵌套列表" class="headerlink" title="嵌套列表"></a>嵌套列表</h4><p>上一级和下一级之间敲三个空格即可</p>
-<h3 id="8-表格"><a href="#8-表格" class="headerlink" title="8.表格"></a>8.表格</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">表头|表头|表头</span><br><span class="line">---|:--:|---:</span><br><span class="line">内容|内容|内容</span><br><span class="line">内容|内容|内容</span><br><span class="line"></span><br><span class="line">第二行分割表头和内容。</span><br><span class="line">- 有一个就行，为了对齐，多加了几个</span><br><span class="line">文字默认居左</span><br><span class="line">-两边加：表示文字居中</span><br><span class="line">-右边加：表示文字居右</span><br><span class="line">注：原生的语法两边都要用 | 包起来。此处省略</span><br></pre></td></tr></table></figure>
+<h4 id="任务列表"><a href="#任务列表" class="headerlink" title="任务列表"></a>任务列表</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-  [ ] 跑步</span><br><span class="line">-  [ ] 骑车</span><br><span class="line">-  [x] 吃饭</span><br><span class="line">-  [ ] 睡觉</span><br></pre></td></tr></table></figure>
+<ul>
+<li><input disabled="" type="checkbox"> 跑步</li>
+<li><input disabled="" type="checkbox"> 骑车</li>
+<li><input checked="" disabled="" type="checkbox"> 吃饭</li>
+<li><input disabled="" type="checkbox"> 睡觉</li>
+</ul>
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">表头|表头|表头</span><br><span class="line">---|:--:|---:</span><br><span class="line">内容|内容|内容</span><br><span class="line">内容|内容|内容</span><br><span class="line"></span><br><span class="line">第二行分割表头和内容。</span><br><span class="line">- 有一个就行，为了对齐，多加了几个</span><br><span class="line">文字默认居左</span><br><span class="line">-两边加：表示文字居中</span><br><span class="line">-右边加：表示文字居右</span><br><span class="line">注：原生的语法两边都要用 | 包起来。此处省略</span><br></pre></td></tr></table></figure>
 
-<p>文字颜色——内置HTML</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;font color&#x3D;#00ffff size&#x3D;72 face&#x3D;&quot;黑体&quot;color&#x3D;#00ffff&lt;&#x2F;font&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="使用LaTeX方法"><a href="#使用LaTeX方法" class="headerlink" title="使用LaTeX方法"></a>使用LaTeX方法</h3><p>参考<a href="https://guo365.github.io/study/Markdown.html#26" target="_blank" rel="noopener">https://guo365.github.io/study/Markdown.html#26</a></p>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -126,6 +136,10 @@
 
 
     </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#标题"><span class="toc-number">1.</span> <span class="toc-text">标题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字体"><span class="toc-number">2.</span> <span class="toc-text">字体</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#加粗"><span class="toc-number">2.1.</span> <span class="toc-text">加粗</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#斜体"><span class="toc-number">2.2.</span> <span class="toc-text">斜体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#斜体加粗"><span class="toc-number">2.3.</span> <span class="toc-text">斜体加粗</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除线"><span class="toc-number">2.4.</span> <span class="toc-text">删除线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缩进"><span class="toc-number">2.5.</span> <span class="toc-text">缩进</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文字颜色"><span class="toc-number">2.6.</span> <span class="toc-text">文字颜色</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用"><span class="toc-number">3.</span> <span class="toc-text">引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分割线"><span class="toc-number">4.</span> <span class="toc-text">分割线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图片"><span class="toc-number">5.</span> <span class="toc-text">图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超链接"><span class="toc-number">6.</span> <span class="toc-text">超链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表"><span class="toc-number">7.</span> <span class="toc-text">列表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#无序列表"><span class="toc-number">7.1.</span> <span class="toc-text">无序列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#有序列表"><span class="toc-number">7.2.</span> <span class="toc-text">有序列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#嵌套列表"><span class="toc-number">7.3.</span> <span class="toc-text">嵌套列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#任务列表"><span class="toc-number">7.4.</span> <span class="toc-text">任务列表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表格"><span class="toc-number">8.</span> <span class="toc-text">表格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用LaTeX方法"><span class="toc-number">9.</span> <span class="toc-text">使用LaTeX方法</span></a></li></ol>	
+        </div>
     
 </div>
 
