@@ -6,13 +6,32 @@
     <content><![CDATA[<p>数量运算的题量为15道（北京市），考察主要体现在基础知识的侧重技巧、高频考点必考、扩展考点隔年考察。</p>
 <h3 id="数学运算基础必备"><a href="#数学运算基础必备" class="headerlink" title="数学运算基础必备"></a>数学运算基础必备</h3><h4 id="算术基础知识"><a href="#算术基础知识" class="headerlink" title="算术基础知识"></a>算术基础知识</h4><h5 id="整数的特性"><a href="#整数的特性" class="headerlink" title="整数的特性"></a>整数的特性</h5><ol>
 <li>质合性<br>质数：只可以被1和自身整除，不能被其他整数整除。2是唯一的偶质数。<br>合数：除了1和自身外，还能被其他整数整除。</li>
-<li>整除的判断</li>
+<li>整除的判断<br><font class="exerise">例题：小张的孩子的出生月份乘上29，出生的日期乘上24，所得的两个乘积和为900.问孩子出生在哪一个季度？</font><br><font class="answer"><em>解析： 列方程式为29x+24y=900,24、900都可以被12整除，由整除的加减性可知，29x也可以被12整除，那x只能是12，在第四季度。</em></font></li>
+<li>公因数和公倍数<br>公共的因数、公共的倍数</li>
 </ol>
-<h4 id="代数工具"><a href="#代数工具" class="headerlink" title="代数工具"></a>代数工具</h4><style>
+<h5 id="比例性质"><a href="#比例性质" class="headerlink" title="比例性质"></a>比例性质</h5><p>自己分份数后记得不能随便约分。　　<br><font class="exerise">例题：某公司年终分红，董事会发放奖励，原本打算依据职位高低按甲乙丙比例为3:2:1的方案进行分配，最终决定根据实际贡献按甲乙丙比例为4:3:2分配。最终方案中（ ）得到的奖金比原有方案有所提升。</font>　　　<br><font class="answer"><em>解析： 第一次总份数为6，第二次总份数为9，最小公倍数为18。换成9:6:3和8:6:4，所以是丙得到的奖金提高了。</em></font></p>
+<h4 id="代数工具"><a href="#代数工具" class="headerlink" title="代数工具"></a>代数工具</h4><h5 id="不等式"><a href="#不等式" class="headerlink" title="不等式"></a>不等式</h5><p>两个正数的算术平均数不小于几何平均数，即(a+b)/2 ≥ √(ab)，当且仅当a = b时，等号成立。左边是两个数的算术平均数，右边是几何平均数，这个不等式为<font class="strong">均值不等式</font>。</p>
+<ol>
+<li>两个正数，当他们和为一个确定的数时，他们相等时乘积最大。</li>
+<li>两个正数，当他们积为一个确定的数时，他们相等时和最小。<br><font class="exerise">例题：用40cmX60cm的砖铺一个房间的地，在不破坏方砖的情况下，正好需要用60块。假设该长方形地面的周长的最小值为X米，那么X的值在以下哪个范围内？<br>A.X&lt;15           　　　　B.15≤X&lt;16<br>C.16≤X&lt;17        　　D.X≥17</font><br><font class="answer"><em>长方形地面的面积是 60x0.4x0.6=14.4平方米，根据不等式，长宽和最小值为2√14.4，周长最小值为4√14.4，选项为B。</em></font></li>
+</ol>
+<h5 id="数列"><a href="#数列" class="headerlink" title="数列"></a>数列</h5><p>等差数列：如果一个数列从第二项起，每一项与它的前一项的差等于同一个常数，这个数列就叫做等差数列。<br>an = a1 + (n-1)d<br>Sn = n*a1+n(n-1)d/2 或 Sn = n(a1+an)/2<br>等比数列：从第二项起，每一项与它的前一项的比值等于同一个常数的一种数列。<br>an=a₁*qⁿ⁻¹<br>Sn = a1(1-qⁿ)/(1-q), q≠1<br>Sn = n*a1, q=1<br><em>注：首项！ 有时候两者混考，等比数列但是要算加法（e.g.微博关注数）</em></p>
+<h4 id="实战技巧"><a href="#实战技巧" class="headerlink" title="实战技巧"></a>实战技巧</h4><ol>
+<li>特值法<br><font class="exerise">例题：A、B两个容器装有质量相同的酒精溶液，若从A、B中各取一半的溶液，混合后浓度为45%；若从A取出1/2，B取出1/4溶液，混合后浓度为40%。若从A取出1/5，B取出4/5溶液，混合后浓度为？</font><br><font class="answer"><em>解析：设A、B两个容器中的酒精溶液质量都是100，溶液的浓度分别是x、y。则有100x+100y=45%*200, 50x+25y=40%\</em>(50+25),解得x=30%，y=60%。所求为(20*0.3+80*0.6)/100=54% *</font></li>
+<li>排除法<br><font class="exerise">例题：有A、B两瓶混合液，A中水、油、醋的比例为3:8:5，B中水、油、醋的比例为1:2：3，将A、B两瓶混合液倒在一起后，得到的混合液中水、油、醋的比例可能为（）。<br>A、4：5：2　　B、2：3：5<br>C、3：7：7　　D、1：3：3</font><br><font class="answer"><em>解析：在A、B中，水的比重都小于醋，混合后也符合，排除A、D；在A、B两瓶混合液中，油的比重分别是1/2，1/3，混合后大于1/3，排除B。</em></font></li>
+</ol>
+<h3 id="数学运算高频考点"><a href="#数学运算高频考点" class="headerlink" title="数学运算高频考点"></a>数学运算高频考点</h3><h4 id="几何问题"><a href="#几何问题" class="headerlink" title="几何问题"></a>几何问题</h4><h5 id="平行图行周长和面积"><a href="#平行图行周长和面积" class="headerlink" title="平行图行周长和面积"></a>平行图行周长和面积</h5><p><img src="/images/gongwuyuan1.jpg" alt="平行图行周长和面积"></p>
+<h5 id="立体图形表面积和体积"><a href="#立体图形表面积和体积" class="headerlink" title="立体图形表面积和体积"></a>立体图形表面积和体积</h5><p><img src="/images/gongwuyuan2.gif" alt="立体图形表面积和体积"></p>
+<h5 id="勾股定理"><a href="#勾股定理" class="headerlink" title="勾股定理"></a>勾股定理</h5><p>勾股定理是一个基本的几何定理，指直角三角形的两条直角边的平方和等于斜边的平方。a²+b²=c²</p>
+<h5 id="相似三角形"><a href="#相似三角形" class="headerlink" title="相似三角形"></a>相似三角形</h5><p>对应边成比例，对应角相等（出现在平行，对顶角图形）</p>
+<h5 id="距离最短问题"><a href="#距离最短问题" class="headerlink" title="距离最短问题"></a>距离最短问题</h5><p>直线距离最短，立体图形转成平面图画图。</p>
+<style>
 table th:first-of-type {width: 10%;}
 table th:nth-of-type(2) {width: 90%;}
 .attention{color: #f55d42;}
 .strong{color: #5a5a96;font-weight: bold;}
+.exerise{color: #8d81a6;}
+.answer{color: #a295bf;}
 </style>]]></content>
       <categories>
         <category>公务员行测</category>
