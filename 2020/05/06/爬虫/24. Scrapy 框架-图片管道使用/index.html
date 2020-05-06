@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>24. Scrapy 框架-图片管道使用 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="1. 介绍Scrapy提供了一个 item pipeline ，来下载属于某个特定项目的图片，比如，当你抓取产品时，也想把它们的图片下载到本地。
+这条管道，被称作图片管道，在 ImagesPipel,"> 
+    <meta name="author" content="Jin Nian"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/Ana-behibak/Ana-behibak.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">24. Scrapy 框架-图片管道使用</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">24. Scrapy 框架-图片管道使用</h1>
+        <div class="stuff">
+            <span>五月 06, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h3><p>Scrapy提供了一个 item pipeline ，来下载属于某个特定项目的图片，比如，当你抓取产品时，也想把它们的图片下载到本地。</p>
+<p>这条管道，被称作图片管道，在 <code>ImagesPipeline</code> 类中实现，提供了一个方便并具有额外特性的方法，来下载并本地存储图片:</p>
+<ul>
+<li>将所有下载的图片转换成通用的格式（JPG）和模式（RGB）</li>
+<li>避免重新下载最近已经下载过的图片</li>
+<li>缩略图生成</li>
+<li>检测图像的宽/高，确保它们满足最小限制</li>
+</ul>
+<p>这个管道也会为那些当前安排好要下载的图片保留一个内部队列，并将那些到达的包含相同图片的项目连接到那个队列中。 这可以避免多次下载几个项目共享的同一个图片</p>
+<h3 id="2-使用图片管道"><a href="#2-使用图片管道" class="headerlink" title="2. 使用图片管道"></a>2. 使用图片管道</h3><p>当使用 ImagesPipeline ，典型的工作流程如下所示:</p>
+<ol>
+<li>在一个爬虫里，你抓取一个项目，把其中图片的URL放入 image_urls 组内</li>
+<li>项目从爬虫内返回，进入项目管道</li>
+<li>当项目进入 ImagesPipeline，image_urls 组内的URLs将被Scrapy的调度器和下载器（这意味着调度器和下载器的中间件可以复用）安排下载，当优先级更高，会在其他页面被抓取前处理。项目会在这个特定的管道阶段保持“locker”的状态，直到完成图片的下载（或者由于某些原因未完成下载）。</li>
+<li>当图片下载完，另一个组(images)将被更新到结构中。这个组将包含一个字典列表，其中包括下载图片的信息，比如下载路径、源抓取地址（从 image_urls 组获得）和图片的校验码。 images 列表中的图片顺序将和源 image_urls 组保持一致。如果某个图片下载失败，将会记录下错误信息，图片也不会出现在 images 组中</li>
+</ol>
+<h3 id="3-具体流程-此处以zol网站为例"><a href="#3-具体流程-此处以zol网站为例" class="headerlink" title="3. 具体流程(此处以zol网站为例)"></a>3. 具体流程(此处以zol网站为例)</h3><ol>
+<li><p>定义item</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import scrapy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ImagedownloadItem(scrapy.Item):</span><br><span class="line">    # define the fields for your item here like:</span><br><span class="line">    img_name &#x3D; scrapy.Field()</span><br><span class="line">    img_urls &#x3D;scrapy.Field()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写spider</p>
+<blockquote>
+<p>思路：获取文件地址–&gt;获取图片名称–&gt;推送地址</p>
+</blockquote>
+</li>
+</ol>
+<p>此处是一张一张的推送</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class ZolSpiderSpider(scrapy.Spider):</span><br><span class="line">    name &#x3D; &#39;zol&#39;</span><br><span class="line">    allowed_domains &#x3D; [&#39;zol.com.cn&#39;]</span><br><span class="line">    url &#x3D;&#39;http:&#x2F;&#x2F;desk.zol.com.cn&#39;</span><br><span class="line">    start_urls &#x3D; [url+&#39;&#x2F;bizhi&#x2F;7106_88025_2.html&#39;]</span><br><span class="line"></span><br><span class="line">    def parse(self, response):</span><br><span class="line">        image_url &#x3D; response.xpath(&#39;&#x2F;&#x2F;img[@id&#x3D;&quot;bigImg&quot;]&#x2F;@src&#39;).extract_first()</span><br><span class="line">        image_name &#x3D; response.xpath(&#39;&#x2F;&#x2F;h3&#39;)[0].xpath(&#39;string(.)&#39;).extract_first().strip().replace(&#39;\r\n\t\t&#39;, &#39;&#39;)</span><br><span class="line">        next_image &#x3D; response.xpath(&#39;&#x2F;&#x2F;a[@id&#x3D;&quot;pageNext&quot;]&#x2F;@href&#39;).extract_first()</span><br><span class="line">        item &#x3D; ImagedownloadItem()</span><br><span class="line">        item[&quot;img_name&quot;] &#x3D; image_name</span><br><span class="line">        item[&quot;img_urls&quot;] &#x3D; image_url</span><br><span class="line">        yield item</span><br><span class="line"></span><br><span class="line">        yield scrapy.Request(self.url+next_image,callback&#x3D;self.parse,)</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>编写pipline</p>
+<p>以下如果不想改文件名，meta属性可以忽略不写</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def get_media_requests(self, item, info):</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    #如果item[urls]里里面是列表，用下面</span><br><span class="line">    urls&#x3D; item[&#39;urls&#39;]</span><br><span class="line">    for url in urls:</span><br><span class="line">        yield scrapy.Request(url,meta&#x3D;&#123;&quot;item&quot;,item&#125;)</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    # 如果item[urls]里里面是一个图片地址，用这下面的</span><br><span class="line">    yield scrapy.Request(item[&#39;img_urls&#39;], meta&#x3D;&#123;&quot;item&quot;: item&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>因为scrapy里是使用它们URL的 SHA1 hash 作为文件名，所以如果想重命名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def file_path(self, request, response&#x3D;None, info&#x3D;None):</span><br><span class="line">      item &#x3D; request.meta[&quot;item&quot;]</span><br><span class="line">      #去掉文件里的&#x2F;,避免创建图片文件时出错</span><br><span class="line">      filename &#x3D; item[&quot;img_name&quot;].replace(&quot;&#x2F;&quot;,&quot;-&quot;)+&quot;.jpg&quot;</span><br><span class="line"></span><br><span class="line">      return filename</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>定义图片保存在哪？<br>在settings中增加一句<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IMAGES_STORE &#x3D; &quot;e:&#x2F;pics&quot;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='true'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-介绍"><span class="toc-number">1.</span> <span class="toc-text">1. 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用图片管道"><span class="toc-number">2.</span> <span class="toc-text">2. 使用图片管道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-具体流程-此处以zol网站为例"><span class="toc-number">3.</span> <span class="toc-text">3. 具体流程(此处以zol网站为例)</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

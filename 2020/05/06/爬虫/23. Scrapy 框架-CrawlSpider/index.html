@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>23. Scrapy 框架-CrawlSpider - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="1. CrawlSpiders原理图123456sequenceDiagramstart_urls -&amp;gt;&amp;gt;调度器: 初始化url调度器-&amp;gt;&amp;gt;下载器: request下载器-&amp;,"> 
+    <meta name="author" content="Jin Nian"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/Ana-behibak/Ana-behibak.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">23. Scrapy 框架-CrawlSpider</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">23. Scrapy 框架-CrawlSpider</h1>
+        <div class="stuff">
+            <span>五月 06, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="1-CrawlSpiders"><a href="#1-CrawlSpiders" class="headerlink" title="1. CrawlSpiders"></a>1. CrawlSpiders</h3><h4 id="原理图"><a href="#原理图" class="headerlink" title="原理图"></a>原理图</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">start_urls -&gt;&gt;调度器: 初始化url</span><br><span class="line">调度器-&gt;&gt;下载器: request</span><br><span class="line">下载器-&gt;&gt;rules: response</span><br><span class="line">rules-&gt;&gt;数据提取: response</span><br><span class="line">rules-&gt;&gt;调度器: 新的url</span><br></pre></td></tr></table></figure>
+
+<p>通过下面的命令可以快速创建 CrawlSpider模板 的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy genspider -t crawl 文件名 (allowed_url)</span><br></pre></td></tr></table></figure>
+<p>首先在说下Spider，它是所有爬虫的基类，而CrawSpiders就是Spider的派生类。对于设计原则是只爬取start_url列表中的网页，而从爬取的网页中获取link并继续爬取的工作CrawlSpider类更适合</p>
+<h3 id="2-Rule对象"><a href="#2-Rule对象" class="headerlink" title="2. Rule对象"></a>2. Rule对象</h3><p>Rule类与CrawlSpider类都位于scrapy.contrib.spiders模块中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class scrapy.contrib.spiders.Rule (  </span><br><span class="line">link_extractor, callback&#x3D;None,cb_kwargs&#x3D;None,follow&#x3D;None,process_links&#x3D;None,process_request&#x3D;None )</span><br></pre></td></tr></table></figure>
+<p>参数含义：</p>
+<ul>
+<li><p>link_extractor为LinkExtractor，用于定义需要提取的链接</p>
+</li>
+<li><p>callback参数：当link_extractor获取到链接时参数所指定的值作为回调函数</p>
+<ul>
+<li>callback参数使用注意：<br>当编写爬虫规则时，请避免使用parse作为回调函数。于CrawlSpider使用parse方法来实现其逻辑，如果您覆盖了parse方法，crawlspider将会运行失败</li>
+</ul>
+</li>
+<li><p>follow：指定了根据该规则从response提取的链接是否需要跟进。当callback为None,默认值为True</p>
+</li>
+<li><p>process_links：主要用来过滤由link_extractor获取到的链接</p>
+</li>
+<li><p>process_request：主要用来过滤在rule中提取到的request</p>
+</li>
+</ul>
+<h3 id="3-LinkExtractors"><a href="#3-LinkExtractors" class="headerlink" title="3.LinkExtractors"></a>3.LinkExtractors</h3><h4 id="3-1-概念"><a href="#3-1-概念" class="headerlink" title="3.1 概念"></a>3.1 概念</h4><blockquote>
+<p>顾名思义，链接提取器</p>
+</blockquote>
+<h4 id="3-2-作用"><a href="#3-2-作用" class="headerlink" title="3.2 作用"></a>3.2 作用</h4><p>response对象中获取链接，并且该链接会被接下来爬取<br>每个LinkExtractor有唯一的公共方法是 extract_links()，它接收一个 Response 对象，并返回一个 scrapy.link.Link 对象</p>
+<h4 id="3-3-使用"><a href="#3-3-使用" class="headerlink" title="3.3 使用"></a>3.3 使用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class scrapy.linkextractors.LinkExtractor(</span><br><span class="line">    allow &#x3D; (),</span><br><span class="line">    deny &#x3D; (),</span><br><span class="line">    allow_domains &#x3D; (),</span><br><span class="line">    deny_domains &#x3D; (),</span><br><span class="line">    deny_extensions &#x3D; None,</span><br><span class="line">    restrict_xpaths &#x3D; (),</span><br><span class="line">    tags &#x3D; (&#39;a&#39;,&#39;area&#39;),</span><br><span class="line">    attrs &#x3D; (&#39;href&#39;),</span><br><span class="line">    canonicalize &#x3D; True,</span><br><span class="line">    unique &#x3D; True,</span><br><span class="line">    process_value &#x3D; None</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>主要参数：</p>
+<ul>
+<li><p>allow：满足括号中“正则表达式”的值会被提取，如果为空，则全部匹配。</p>
+</li>
+<li><p>deny：与这个正则表达式(或正则表达式列表)不匹配的URL一定不提取。</p>
+</li>
+<li><p>allow_domains：会被提取的链接的domains。</p>
+</li>
+<li><p>deny_domains：一定不会被提取链接的domains。</p>
+</li>
+<li><p>restrict_xpaths：使用xpath表达式，和allow共同作用过滤链接(只选到节点，不选到属性)</p>
+</li>
+</ul>
+<h5 id="3-3-1-查看效果（shell中验证"><a href="#3-3-1-查看效果（shell中验证" class="headerlink" title="3.3.1 查看效果（shell中验证)"></a>3.3.1 查看效果（shell中验证)</h5><p>首先运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy shell http:&#x2F;&#x2F;www.fhxiaoshuo.com&#x2F;read&#x2F;33&#x2F;33539&#x2F;17829387.shtml</span><br></pre></td></tr></table></figure>
+
+<p>继续import相关模块：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from scrapy.linkextractors import LinkExtractor</span><br></pre></td></tr></table></figure>
+<p>提取当前网页中获得的链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">link &#x3D; LinkExtractor(restrict_xpaths&#x3D;(r&#39;&#x2F;&#x2F;div[@class&#x3D;&quot;bottem&quot;]&#x2F;a[4]&#39;)</span><br></pre></td></tr></table></figure>
+<p>调用LinkExtractor实例的extract_links()方法查询匹配结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">link.extract_links(response)</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-2-查看效果-CrawlSpider版本"><a href="#3-3-2-查看效果-CrawlSpider版本" class="headerlink" title="3.3.2 查看效果 CrawlSpider版本"></a>3.3.2 查看效果 CrawlSpider版本</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from scrapy.linkextractors import LinkExtractor</span><br><span class="line">from scrapy.spiders import CrawlSpider, Rule</span><br><span class="line">from xiaoshuo.items import XiaoshuoItem</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class XiaoshuoSpiderSpider(CrawlSpider):</span><br><span class="line">    name &#x3D; &#39;xiaoshuo_spider&#39;</span><br><span class="line">    allowed_domains &#x3D; [&#39;fhxiaoshuo.com&#39;]</span><br><span class="line">    start_urls &#x3D; [&#39;http:&#x2F;&#x2F;www.fhxiaoshuo.com&#x2F;read&#x2F;33&#x2F;33539&#x2F;17829387.shtml&#39;]</span><br><span class="line"></span><br><span class="line">    rules &#x3D; [</span><br><span class="line">        Rule(LinkExtractor(restrict_xpaths&#x3D;(r&#39;&#x2F;&#x2F;div[@class&#x3D;&quot;bottem&quot;]&#x2F;a[4]&#39;)), callback&#x3D;&#39;parse_item&#39;),]</span><br><span class="line"></span><br><span class="line">    def parse_item(self, response):</span><br><span class="line">        info &#x3D; response.xpath(&quot;&#x2F;&#x2F;div[@id&#x3D;&#39;TXT&#39;]&#x2F;text()&quot;).extract()</span><br><span class="line">        it &#x3D; XiaoshuoItem()</span><br><span class="line">        it[&#39;info&#39;] &#x3D; info</span><br><span class="line">        yield it</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rules &#x3D; [</span><br><span class="line">       Rule(LinkExtractor(restrict_xpaths&#x3D;(r&#39;&#x2F;&#x2F;div[@class&#x3D;&quot;bottem&quot;]&#x2F;a[4]&#39;)), callback&#x3D;&#39;parse_item&#39;),]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>callback后面函数名用引号引起</li>
+<li>函数名不能是parse</li>
+<li>格式问题</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='true'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CrawlSpiders"><span class="toc-number">1.</span> <span class="toc-text">1. CrawlSpiders</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#原理图"><span class="toc-number">1.1.</span> <span class="toc-text">原理图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Rule对象"><span class="toc-number">2.</span> <span class="toc-text">2. Rule对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-LinkExtractors"><span class="toc-number">3.</span> <span class="toc-text">3.LinkExtractors</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-概念"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-作用"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-使用"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-1-查看效果（shell中验证"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.3.1 查看效果（shell中验证)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-2-查看效果-CrawlSpider版本"><span class="toc-number">3.3.2.</span> <span class="toc-text">3.3.2 查看效果 CrawlSpider版本</span></a></li></ol></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
