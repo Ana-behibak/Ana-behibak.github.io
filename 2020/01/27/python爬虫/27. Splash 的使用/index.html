@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>27. Splash 的使用 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="1. Splash介绍
+Splash是一个JavaScript渲染服务，是一个带有HTTP API的轻量级浏览器，同时它对接了Python中的Twisted和QT库。利用它，我们同样可以实现动态渲染,"> 
+    <meta name="author" content="Jin Nian"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/Ana-behibak/Ana-behibak.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">27. Splash 的使用</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">27. Splash 的使用</h1>
+        <div class="stuff">
+            <span>一月 27, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="1-Splash介绍"><a href="#1-Splash介绍" class="headerlink" title="1. Splash介绍"></a>1. Splash介绍</h3><blockquote>
+<p>Splash是一个JavaScript渲染服务，是一个带有HTTP API的轻量级浏览器，同时它对接了Python中的Twisted和QT库。利用它，我们同样可以实现动态渲染页面的抓取</p>
+</blockquote>
+<h3 id="2-安装"><a href="#2-安装" class="headerlink" title="2. 安装"></a>2. 安装</h3><h4 id="2-1-安装docker"><a href="#2-1-安装docker" class="headerlink" title="2.1 安装docker"></a>2.1 安装docker</h4><h4 id="2-2-拉取镜像"><a href="#2-2-拉取镜像" class="headerlink" title="2.2 拉取镜像"></a>2.2 拉取镜像</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull scrapinghub&#x2F;splash</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-用docker运行scrapinghub-splash"><a href="#2-3-用docker运行scrapinghub-splash" class="headerlink" title="2.3 用docker运行scrapinghub/splash"></a>2.3 用docker运行scrapinghub/splash</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8050:8050 scrapinghub&#x2F;splash</span><br></pre></td></tr></table></figure>
+<h4 id="2-4-查看效果"><a href="#2-4-查看效果" class="headerlink" title="2.4 查看效果"></a>2.4 查看效果</h4><blockquote>
+<p>我们在8050端口上运行了Splash服务，打开<a href="http://192.168.99.100:8050/即可看到其Web页面" target="_blank" rel="noopener">http://192.168.99.100:8050/即可看到其Web页面</a><br><img src="https://note.youdao.com/yws/api/personal/file/366AEA0862FF4B77B584F99F058FD0FE?method=download&shareKey=1becb4e3fd74346d3e247a6cf7d8406d" alt="image"></p>
+</blockquote>
+<h3 id="3-Splash对象属性"><a href="#3-Splash对象属性" class="headerlink" title="3 Splash对象属性"></a>3 Splash对象属性</h3><blockquote>
+<p>上图中main()方法的第一个参数是splash，这个对象非常重要，它类似于Selenium中的WebDriver对象</p>
+</blockquote>
+<h4 id="3-1-images-enabled"><a href="#3-1-images-enabled" class="headerlink" title="3.1 images_enabled"></a>3.1 images_enabled</h4><blockquote>
+<p>设置图片是否加载，默认情况下是加载的。禁用该属性后，可以节省网络流量并提高网页加载速度</p>
+</blockquote>
+<blockquote>
+<p>注意的是，禁用图片加载可能会影响JavaScript渲染。因为禁用图片之后，它的外层DOM节点的高度会受影响，进而影响DOM节点的位置</p>
+</blockquote>
+<blockquote>
+<p>因此，如果JavaScript对图片节点有操作的话，其执行就会受到影响</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function main(splash, args)</span><br><span class="line">  splash.images_enabled &#x3D; false</span><br><span class="line">  splash:go(&#39;https:&#x2F;&#x2F;www.baidu.com&#39;)</span><br><span class="line">  return &#123;html&#x3D;splash:html()&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-plugins-enabled"><a href="#3-2-plugins-enabled" class="headerlink" title="3.2 plugins_enabled"></a>3.2 plugins_enabled</h4><blockquote>
+<p>可以控制浏览器插件（如Flash插件）是否开启</p>
+</blockquote>
+<blockquote>
+<p>默认情况下，此属性是false，表示不开启</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">splash.plugins_enabled &#x3D; true&#x2F;false</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-scroll-position"><a href="#3-3-scroll-position" class="headerlink" title="3.3 scroll_position"></a>3.3 scroll_position</h4><blockquote>
+<p>控制页面上下或左右滚动</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">splash.scroll_position &#x3D; &#123;x&#x3D;100, y&#x3D;200&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-Splash对象的方法"><a href="#4-Splash对象的方法" class="headerlink" title="4. Splash对象的方法"></a>4. Splash对象的方法</h3><h4 id="4-1-go"><a href="#4-1-go" class="headerlink" title="4.1 go()"></a>4.1 go()</h4><blockquote>
+<p>该方法用来请求某个链接，而且它可以模拟GET和POST请求，同时支持传入请求头、表单等数据</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ok, reason &#x3D; splash:go&#123;url, baseurl&#x3D;nil, headers&#x3D;nil, http_method&#x3D;&quot;GET&quot;, body&#x3D;nil, formdata&#x3D;nil&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>返回结果是结果ok和原因reason</p>
+</blockquote>
+<blockquote>
+<p>如果ok为空，代表网页加载出现了错误，此时reason变量中包含了错误的原因</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>url</td>
+<td>请求的URL</td>
+</tr>
+<tr>
+<td>baseurl</td>
+<td>可选参数，默认为空，表示资源加载相对路径</td>
+</tr>
+<tr>
+<td>headers</td>
+<td>可选参数，默认为空，表示请求头</td>
+</tr>
+<tr>
+<td>http_method</td>
+<td>可选参数，默认为GET，同时支持POST</td>
+</tr>
+<tr>
+<td>body</td>
+<td>可选参数，默认为空，发POST请求时的表单数据，使用的Content-type为application/json</td>
+</tr>
+<tr>
+<td>formdata</td>
+<td>可选参数，默认为空，POST的时候的表单数据，使用的Content-type为application/x-www-form-urlencoded</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">splash:go&#123;&quot;http:&#x2F;&#x2F;www.sxt.cn&quot;, http_method&#x3D;&quot;POST&quot;, body&#x3D;&quot;name&#x3D;17703181473&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-2-wait"><a href="#4-2-wait" class="headerlink" title="4.2 wait()"></a>4.2 wait()</h4><blockquote>
+<p>控制页面的等待时间</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">splash:wait&#123;time, cancel_on_redirect&#x3D;false, cancel_on_error&#x3D;true&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>time</td>
+<td>等待的秒数</td>
+</tr>
+<tr>
+<td>cancel_on_redirect</td>
+<td>可选参数，默认为false，表示如果发生了重定向就停止等待，并返回重定向结果</td>
+</tr>
+<tr>
+<td>cancel_on_error</td>
+<td>可选参数，默认为false，表示如果发生了加载错误，就停止等待</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function main(splash)</span><br><span class="line">    splash:go(&quot;https:&#x2F;&#x2F;www.taobao.com&quot;)</span><br><span class="line">    splash:wait(2)</span><br><span class="line">    return &#123;html&#x3D;splash:html()&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-jsfunc"><a href="#4-3-jsfunc" class="headerlink" title="4.3 jsfunc()"></a>4.3 jsfunc()</h4><blockquote>
+<p>直接调用JavaScript定义的方法，但是所调用的方法需要用双中括号包围，这相当于实现了JavaScript方法到Lua脚本的转换</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function main(splash, args)</span><br><span class="line">  splash:go(&quot;http:&#x2F;&#x2F;www.sxt.cn&quot;)</span><br><span class="line">  local scroll_to &#x3D; splash:jsfunc(&quot;window.scrollTo&quot;)</span><br><span class="line">  scroll_to(0, 300)</span><br><span class="line">  return &#123;png&#x3D;splash:png()&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h4 id="4-4-evaljs-与-runjs"><a href="#4-4-evaljs-与-runjs" class="headerlink" title="4.4 evaljs()与 runjs()"></a>4.4 evaljs()与 runjs()</h4><ul>
+<li>evaljs() 以执行JavaScript代码并返回最后一条JavaScript语句的返回结果</li>
+<li>runjs() 以执行JavaScript代码，它与evaljs()的功能类似，但是更偏向于执行某些动作或声明某些方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function main(splash, args)</span><br><span class="line">  splash:go(&quot;https:&#x2F;&#x2F;www.baidu.com&quot;)</span><br><span class="line">  splash:runjs(&quot;foo &#x3D; function() &#123; return &#39;sxt&#39; &#125;&quot;)</span><br><span class="line">  local result &#x3D; splash:evaljs(&quot;foo()&quot;)</span><br><span class="line">  return result</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-5-html"><a href="#4-5-html" class="headerlink" title="4.5 html()"></a>4.5 html()</h4><blockquote>
+<p>获取网页的源代码</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function main(splash, args)</span><br><span class="line">  splash:go(&quot;https:&#x2F;&#x2F;www.bjsxt.com&quot;)</span><br><span class="line">  return splash:html()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h4 id="4-6-png"><a href="#4-6-png" class="headerlink" title="4.6 png()"></a>4.6 png()</h4><blockquote>
+<p>获取PNG格式的网页截图</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function main(splash, args)</span><br><span class="line">  splash:go(&quot;https:&#x2F;&#x2F;www.bjsxt.com&quot;)</span><br><span class="line">  return splash:png()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h4 id="4-7-har"><a href="#4-7-har" class="headerlink" title="4.7 har()"></a>4.7 har()</h4><blockquote>
+<p>获取页面加载过程描述</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function main(splash, args)</span><br><span class="line">  splash:go(&quot;https:&#x2F;&#x2F;www.bjsxt.com&quot;)</span><br><span class="line">  return splash:har()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-8-url"><a href="#4-8-url" class="headerlink" title="4.8 url()"></a>4.8 url()</h4><blockquote>
+<p>获取当前正在访问的URL</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function main(splash, args)</span><br><span class="line">  splash:go(&quot;https:&#x2F;&#x2F;www.bjsxt.com&quot;)</span><br><span class="line">  return splash:url()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-9-get-cookies"><a href="#4-9-get-cookies" class="headerlink" title="4.9 get_cookies()"></a>4.9 get_cookies()</h4><blockquote>
+<p>获取当前页面的Cookies</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function main(splash, args)</span><br><span class="line">  splash:go(&quot;https:&#x2F;&#x2F;www.bjsxt.com&quot;)</span><br><span class="line">  return splash:get_cookies()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h4 id="4-10-add-cookie"><a href="#4-10-add-cookie" class="headerlink" title="4.10 add_cookie()"></a>4.10 add_cookie()</h4><blockquote>
+<p>当前页面添加Cookie</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cookies &#x3D; splash:add_cookie&#123;name, value, path&#x3D;nil, domain&#x3D;nil, expires&#x3D;nil, httpOnly&#x3D;nil, secure&#x3D;nil&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function main(splash)</span><br><span class="line">    splash:add_cookie&#123;&quot;sessionid&quot;, &quot;123456abcdef&quot;, &quot;&#x2F;&quot;, domain&#x3D;&quot;http:&#x2F;&#x2F;bjsxt.com&quot;&#125;</span><br><span class="line">    splash:go(&quot;http:&#x2F;&#x2F;bjsxt.com&#x2F;&quot;)</span><br><span class="line">    return splash:html()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h4 id="4-11-clear-cookies"><a href="#4-11-clear-cookies" class="headerlink" title="4.11 clear_cookies()"></a>4.11 clear_cookies()</h4><blockquote>
+<p>可以清除所有的Cookies</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function main(splash)</span><br><span class="line">    splash:go(&quot;https:&#x2F;&#x2F;www.bjsxt.com&#x2F;&quot;)</span><br><span class="line">    splash:clear_cookies()</span><br><span class="line">    return splash:get_cookies()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h4 id="4-12-set-user-agent"><a href="#4-12-set-user-agent" class="headerlink" title="4.12 set_user_agent()"></a>4.12 set_user_agent()</h4><blockquote>
+<p>设置浏览器的User-Agent</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function main(splash)</span><br><span class="line">  splash:set_user_agent(&#39;Splash&#39;)</span><br><span class="line">  splash:go(&quot;http:&#x2F;&#x2F;httpbin.org&#x2F;get&quot;)</span><br><span class="line">  return splash:html()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h4 id="4-13-set-custom-headers"><a href="#4-13-set-custom-headers" class="headerlink" title="4.13 set_custom_headers()"></a>4.13 set_custom_headers()</h4><blockquote>
+<p>设置请求头</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function main(splash)</span><br><span class="line">  splash:set_custom_headers(&#123;</span><br><span class="line">     [&quot;User-Agent&quot;] &#x3D; &quot;Splash&quot;,</span><br><span class="line">     [&quot;Site&quot;] &#x3D; &quot;Splash&quot;,</span><br><span class="line">  &#125;)</span><br><span class="line">  splash:go(&quot;http:&#x2F;&#x2F;httpbin.org&#x2F;get&quot;)</span><br><span class="line">  return splash:html()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-14-select"><a href="#4-14-select" class="headerlink" title="4.14 select()"></a>4.14 select()</h4><blockquote>
+<p>选中符合条件的第一个节点</p>
+</blockquote>
+<blockquote>
+<p>如果有多个节点符合条件，则只会返回一个</p>
+</blockquote>
+<blockquote>
+<p>其参数是CSS选择器</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function main(splash)</span><br><span class="line">  splash:go(&quot;https:&#x2F;&#x2F;www.baidu.com&#x2F;&quot;)</span><br><span class="line">  input &#x3D; splash:select(&quot;#kw&quot;)</span><br><span class="line">  splash:wait(3)</span><br><span class="line">  return splash:png()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-15-send-text"><a href="#4-15-send-text" class="headerlink" title="4.15 send_text()"></a>4.15 send_text()</h4><blockquote>
+<p>填写文本</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function main(splash)</span><br><span class="line">  splash:go(&quot;https:&#x2F;&#x2F;www.baidu.com&#x2F;&quot;)</span><br><span class="line">  input &#x3D; splash:select(&quot;#kw&quot;)</span><br><span class="line">  input:send_text(&#39;Splash&#39;)</span><br><span class="line">  splash:wait(3)</span><br><span class="line">  return splash:png()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h4 id="4-16-mouse-click"><a href="#4-16-mouse-click" class="headerlink" title="4.16 mouse_click()"></a>4.16 mouse_click()</h4><blockquote>
+<p>模拟鼠标点击操作</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function main(splash)</span><br><span class="line">  splash:go(&quot;https:&#x2F;&#x2F;www.baidu.com&#x2F;&quot;)</span><br><span class="line">  input &#x3D; splash:select(&quot;#kw&quot;)</span><br><span class="line">  input:send_text(&#39;Splash&#39;)</span><br><span class="line">  submit &#x3D; splash:select(&#39;#su&#39;)</span><br><span class="line">  submit:mouse_click()</span><br><span class="line">  splash:wait(3)</span><br><span class="line">  return splash:png()</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-Splash与Python结合"><a href="#5-Splash与Python结合" class="headerlink" title="5 Splash与Python结合"></a>5 Splash与Python结合</h3><h4 id="5-1-render-html"><a href="#5-1-render-html" class="headerlink" title="5.1 render.html"></a>5.1 render.html</h4><blockquote>
+<p>此接口用于获取JavaScript渲染的页面的HTML代码，接口地址就是Splash的运行地址加此接口名称，例如<code>http://192.168.99.100:8050/render.html</code></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">url &#x3D; &#39;http:&#x2F;&#x2F;192.168.99.100:8050&#x2F;render.html?url&#x3D;https:&#x2F;&#x2F;www.bjsxt.com&amp;wait&#x3D;3&#39;</span><br><span class="line">response &#x3D; requests.get(url)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+<h4 id="5-2-render-png"><a href="#5-2-render-png" class="headerlink" title="5.2 render.png"></a>5.2 render.png</h4><blockquote>
+<p>此接口可以获取网页截图</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"> </span><br><span class="line">url &#x3D; &#39;http:&#x2F;&#x2F;192.168.99.100:8050&#x2F;render.png?url&#x3D;https:&#x2F;&#x2F;www.jd.com&amp;wait&#x3D;5&amp;width&#x3D;1000&amp;height&#x3D;700&#39;</span><br><span class="line">response &#x3D; requests.get(url)</span><br><span class="line">with open(&#39;taobao.png&#39;, &#39;wb&#39;) as f:</span><br><span class="line">    f.write(response.content)</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-execute"><a href="#5-3-execute" class="headerlink" title="5.3 execute"></a>5.3 execute</h4><blockquote>
+<p>最为强大的接口。前面说了很多Splash Lua脚本的操作，用此接口便可实现与Lua脚本的对接</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">from urllib.parse import quote</span><br><span class="line"> </span><br><span class="line">lua &#x3D; &#39;&#39;&#39;</span><br><span class="line">function main(splash)</span><br><span class="line">    return &#39;hello&#39;</span><br><span class="line">end</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line"> </span><br><span class="line">url &#x3D; &#39;http:&#x2F;&#x2F;192.168.99.100:8050&#x2F;execute?lua_source&#x3D;&#39; + quote(lua)</span><br><span class="line">response &#x3D; requests.get(url)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='true'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Splash介绍"><span class="toc-number">1.</span> <span class="toc-text">1. Splash介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-安装"><span class="toc-number">2.</span> <span class="toc-text">2. 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-安装docker"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 安装docker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-拉取镜像"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 拉取镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-用docker运行scrapinghub-splash"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 用docker运行scrapinghub&#x2F;splash</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-查看效果"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 查看效果</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Splash对象属性"><span class="toc-number">3.</span> <span class="toc-text">3 Splash对象属性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-images-enabled"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 images_enabled</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-plugins-enabled"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 plugins_enabled</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-scroll-position"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 scroll_position</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Splash对象的方法"><span class="toc-number">4.</span> <span class="toc-text">4. Splash对象的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-go"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 go()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-wait"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 wait()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-jsfunc"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 jsfunc()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-evaljs-与-runjs"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 evaljs()与 runjs()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-5-html"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 html()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-6-png"><span class="toc-number">4.6.</span> <span class="toc-text">4.6 png()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-7-har"><span class="toc-number">4.7.</span> <span class="toc-text">4.7 har()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-8-url"><span class="toc-number">4.8.</span> <span class="toc-text">4.8 url()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-9-get-cookies"><span class="toc-number">4.9.</span> <span class="toc-text">4.9 get_cookies()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-10-add-cookie"><span class="toc-number">4.10.</span> <span class="toc-text">4.10 add_cookie()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-11-clear-cookies"><span class="toc-number">4.11.</span> <span class="toc-text">4.11 clear_cookies()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-12-set-user-agent"><span class="toc-number">4.12.</span> <span class="toc-text">4.12 set_user_agent()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-13-set-custom-headers"><span class="toc-number">4.13.</span> <span class="toc-text">4.13 set_custom_headers()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-14-select"><span class="toc-number">4.14.</span> <span class="toc-text">4.14 select()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-15-send-text"><span class="toc-number">4.15.</span> <span class="toc-text">4.15 send_text()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-16-mouse-click"><span class="toc-number">4.16.</span> <span class="toc-text">4.16 mouse_click()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Splash与Python结合"><span class="toc-number">5.</span> <span class="toc-text">5 Splash与Python结合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-render-html"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 render.html</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-render-png"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 render.png</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-execute"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 execute</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

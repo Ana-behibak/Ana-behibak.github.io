@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>09. 数据提取-XPath - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="1. 介绍
+之前 BeautifulSoup 的用法，这个已经是非常强大的库了，不过还有一些比较流行的解析库，例如 lxml，使用的是 Xpath 语法，同样是效率比较高的解析方法。如果大家对 Be,"> 
+    <meta name="author" content="Jin Nian"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/Ana-behibak/Ana-behibak.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">09. 数据提取-XPath</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">09. 数据提取-XPath</h1>
+        <div class="stuff">
+            <span>一月 09, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h3><blockquote>
+<p>之前 BeautifulSoup 的用法，这个已经是非常强大的库了，不过还有一些比较流行的解析库，例如 lxml，使用的是 Xpath 语法，同样是效率比较高的解析方法。如果大家对 BeautifulSoup 使用不太习惯的话，可以尝试下 Xpath</p>
+</blockquote>
+<p><a href="http://lxml.de/index.html" target="_blank" rel="noopener">官网</a> <a href="http://lxml.de/index.html" target="_blank" rel="noopener">http://lxml.de/index.html</a></p>
+<p><a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="noopener">w3c</a> <a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="noopener">http://www.w3school.com.cn/xpath/index.asp</a></p>
+<h3 id="2-安装"><a href="#2-安装" class="headerlink" title="2. 安装"></a>2. 安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-XPath语法"><a href="#3-XPath语法" class="headerlink" title="3. XPath语法"></a>3. XPath语法</h3><blockquote>
+<p>XPath 是一门在 XML 文档中查找信息的语言。XPath 可用来在 XML 文档中对元素和属性进行遍历。XPath 是 W3C XSLT 标准的主要元素，并且 XQuery 和 XPointer 都构建于 XPath 表达之上</p>
+</blockquote>
+<h4 id="3-1-节点的关系"><a href="#3-1-节点的关系" class="headerlink" title="3.1 节点的关系"></a>3.1 节点的关系</h4><ul>
+<li>父（Parent）</li>
+<li>子（Children）</li>
+<li>同胞（Sibling）</li>
+<li>先辈（Ancestor）</li>
+<li>后代（Descendant）</li>
+</ul>
+<h4 id="3-2-选取节点"><a href="#3-2-选取节点" class="headerlink" title="3.2 选取节点"></a>3.2 选取节点</h4><h5 id="3-2-1-常用的路径表达式"><a href="#3-2-1-常用的路径表达式" class="headerlink" title="3.2.1 常用的路径表达式"></a>3.2.1 常用的路径表达式</h5><table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nodename</td>
+<td>选取此节点的所有子节点</td>
+</tr>
+<tr>
+<td>/</td>
+<td>从根节点选取</td>
+</tr>
+<tr>
+<td>//</td>
+<td>从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置</td>
+</tr>
+<tr>
+<td>.</td>
+<td>选取当前节点</td>
+</tr>
+<tr>
+<td>..</td>
+<td>选取当前节点的父节点</td>
+</tr>
+<tr>
+<td>@</td>
+<td>选取属性</td>
+</tr>
+</tbody></table>
+<h5 id="3-2-2-通配符"><a href="#3-2-2-通配符" class="headerlink" title="3.2.2 通配符"></a>3.2.2 通配符</h5><p>XPath 通配符可用来选取未知的 XML 元素。<br>通配符 | 描述 | 举例 | 结果<br>–|– |– | – </p>
+<ul>
+<li>| 匹配任何元素节点|xpath(‘div/<em>‘) | 获取div下的所有子节点<br>@</em>     | 匹配任何属性节点|xpath(‘div[@*]’) |选取所有带属性的div节点<br>node() | 匹配任何类型的节点</li>
+</ul>
+<h5 id="3-2-3-选取若干路径"><a href="#3-2-3-选取若干路径" class="headerlink" title="3.2.3 选取若干路径"></a>3.2.3 选取若干路径</h5><p>通过在路径表达式中使用“|”运算符，您可以选取若干个路径<br>表达式 | 结果<br>–|–<br>xpath(‘//div<code>|</code>//table’)|获取所有的div与table节点</p>
+<h5 id="3-2-4-谓语"><a href="#3-2-4-谓语" class="headerlink" title="3.2.4 谓语"></a>3.2.4 谓语</h5><p>谓语被嵌在方括号内，用来查找某个特定的节点或包含某个制定的值的节点</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>xpath(‘/body/div[1]’)</td>
+<td>选取body下的第一个div节点</td>
+</tr>
+<tr>
+<td>xpath(‘/body/div[last()]’)</td>
+<td>选取body下最后一个div节点</td>
+</tr>
+<tr>
+<td>xpath(‘/body/div[last()-1]’)</td>
+<td>选取body下倒数第二个节点</td>
+</tr>
+<tr>
+<td>xpath(‘/body/div[positon()&lt;3]’)</td>
+<td>选取body下前丙个div节点</td>
+</tr>
+<tr>
+<td>xpath(‘/body/div[@class]’)</td>
+<td>选取body下带有class属性的div节点</td>
+</tr>
+<tr>
+<td>xpath(‘/body/div[@class=”main”]’)</td>
+<td>选取body下class属性为main的div节点</td>
+</tr>
+<tr>
+<td>xpath(‘/body/div[price&gt;35.00]’)</td>
+<td>选取body下price元素大于35的div节点</td>
+</tr>
+</tbody></table>
+<h5 id="3-2-5-XPath-运算符"><a href="#3-2-5-XPath-运算符" class="headerlink" title="3.2.5 XPath 运算符"></a>3.2.5 XPath 运算符</h5><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+<th>实例</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td>计算两个节点集</td>
+<td>//book</td>
+</tr>
+<tr>
+<td>+</td>
+<td>加法</td>
+<td>6 + 4</td>
+<td>10</td>
+</tr>
+<tr>
+<td>–</td>
+<td>减法</td>
+<td>6 – 4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘法</td>
+<td>6 * 4</td>
+<td>24</td>
+</tr>
+<tr>
+<td>div</td>
+<td>除法</td>
+<td>8 div 4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>=</td>
+<td>等于</td>
+<td>price=9.80</td>
+<td>如果 price 是 9.80，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>不等于</td>
+<td>price!=9.80</td>
+<td>如果 price 是 9.90，则返回 true。如果 price 是 9.80，则返回 false。</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+<td>price&lt;9.80</td>
+<td>如果 price 是 9.00，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小于或等于</td>
+<td>price&lt;=9.80</td>
+<td>如果 price 是 9.00，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于</td>
+<td>price&gt;9.80</td>
+<td>如果 price 是 9.90，则返回 true。如果 price 是 9.80，则返回 false。</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>大于或等于</td>
+<td>price&gt;=9.80</td>
+<td>如果 price 是 9.90，则返回 true。如果 price 是 9.70，则返回 false。</td>
+</tr>
+<tr>
+<td>or</td>
+<td>或</td>
+<td>price=9.80 or price=9.70</td>
+<td>如果 price 是 9.80，则返回 true。如果 price 是 9.50，则返回 false。</td>
+</tr>
+<tr>
+<td>and</td>
+<td>与</td>
+<td>price&gt;9.00 and price&lt;9.90</td>
+<td>如果 price 是 9.80，则返回 true。如果 price 是 8.50，则返回 false。</td>
+</tr>
+<tr>
+<td>mod</td>
+<td>计算除法的余数</td>
+<td>5 mod 2</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h4 id="3-3-使用"><a href="#3-3-使用" class="headerlink" title="3.3 使用"></a>3.3 使用</h4><h5 id="3-3-1-小例子"><a href="#3-3-1-小例子" class="headerlink" title="3.3.1 小例子"></a>3.3.1 小例子</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from lxml import etree</span><br><span class="line">text &#x3D; &#39;&#39;&#39;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-0&quot;&gt;&lt;a href&#x3D;&quot;link1.html&quot;&gt;first item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-1&quot;&gt;&lt;a href&#x3D;&quot;link2.html&quot;&gt;second item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-inactive&quot;&gt;&lt;a href&#x3D;&quot;link3.html&quot;&gt;third item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-1&quot;&gt;&lt;a href&#x3D;&quot;link4.html&quot;&gt;fourth item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-0&quot;&gt;&lt;a href&#x3D;&quot;link5.html&quot;&gt;fifth item&lt;&#x2F;a&gt;</span><br><span class="line">     &lt;&#x2F;ul&gt;</span><br><span class="line"> &lt;&#x2F;div&gt;</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">html &#x3D; etree.HTML(text)</span><br><span class="line">result &#x3D; etree.tostring(html)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<p>首先我们使用 lxml 的 etree 库，然后利用 etree.HTML 初始化，然后我们将其打印出来。</p>
+<p>其中，这里体现了 lxml 的一个非常实用的功能就是自动修正 html 代码，大家应该注意到了，最后一个 li 标签，其实我把尾标签删掉了，是不闭合的。不过，lxml 因为继承了 libxml2 的特性，具有自动修正 HTML 代码的功能。</p>
+<p>所以输出结果是这样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;&lt;body&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-0&quot;&gt;&lt;a href&#x3D;&quot;link1.html&quot;&gt;first item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-1&quot;&gt;&lt;a href&#x3D;&quot;link2.html&quot;&gt;second item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-inactive&quot;&gt;&lt;a href&#x3D;&quot;link3.html&quot;&gt;third item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-1&quot;&gt;&lt;a href&#x3D;&quot;link4.html&quot;&gt;fourth item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-0&quot;&gt;&lt;a href&#x3D;&quot;link5.html&quot;&gt;fifth item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">&lt;&#x2F;ul&gt;</span><br><span class="line"> &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>不仅补全了 li 标签，还添加了 body，html 标签。<br>文件读取</p>
+<p>除了直接读取字符串，还支持从文件读取内容。比如我们新建一个文件叫做 hello.html，内容为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-0&quot;&gt;&lt;a href&#x3D;&quot;link1.html&quot;&gt;first item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-1&quot;&gt;&lt;a href&#x3D;&quot;link2.html&quot;&gt;second item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-inactive&quot;&gt;&lt;a href&#x3D;&quot;link3.html&quot;&gt;&lt;span class&#x3D;&quot;bold&quot;&gt;third item&lt;&#x2F;span&gt;&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-1&quot;&gt;&lt;a href&#x3D;&quot;link4.html&quot;&gt;fourth item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">         &lt;li class&#x3D;&quot;item-0&quot;&gt;&lt;a href&#x3D;&quot;link5.html&quot;&gt;fifth item&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">     &lt;&#x2F;ul&gt;</span><br><span class="line"> &lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>利用 parse 方法来读取文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from lxml import etree</span><br><span class="line">html &#x3D; etree.parse(&#39;hello.html&#39;)</span><br><span class="line">result &#x3D; etree.tostring(html, pretty_print&#x3D;True)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<p>同样可以得到相同的结果</p>
+<h5 id="3-3-2-XPath具体使用"><a href="#3-3-2-XPath具体使用" class="headerlink" title="3.3.2 XPath具体使用"></a>3.3.2 XPath具体使用</h5><p>依然以上一段程序为例</p>
+<ol>
+<li>获取所有的 <code>&lt;li&gt;</code> 标签</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from lxml import etree</span><br><span class="line">html &#x3D; etree.parse(&#39;hello.html&#39;)</span><br><span class="line">print (type(html))</span><br><span class="line">result &#x3D; html.xpath(&#39;&#x2F;&#x2F;li&#39;)</span><br><span class="line">print (result)</span><br><span class="line">print (len(result))</span><br><span class="line">print (type(result))</span><br><span class="line">print (type(result[0]))</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;type &#39;lxml.etree._ElementTree&#39;&gt;</span><br><span class="line">[&lt;Element li at 0x1014e0e18&gt;, &lt;Element li at 0x1014e0ef0&gt;, &lt;Element li at 0x1014e0f38&gt;, &lt;Element li at 0x1014e0f80&gt;, &lt;Element li at 0x1014e0fc8&gt;]</span><br><span class="line"></span><br><span class="line">&lt;type &#39;list&#39;&gt;</span><br><span class="line">&lt;type &#39;lxml.etree._Element&#39;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可见，etree.parse 的类型是 ElementTree，通过调用 xpath 以后，得到了一个列表，包含了 5 个 <code>&lt;li&gt;</code> 元素，每个元素都是 Element 类型</p>
+<ol start="2">
+<li>获取<code>&lt;li&gt;</code>标签的所有 class<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result &#x3D; html.xpath(&#39;&#x2F;&#x2F;li&#x2F;@class&#39;)</span><br><span class="line">print (result)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#39;item-0&#39;, &#39;item-1&#39;, &#39;item-inactive&#39;, &#39;item-1&#39;, &#39;item-0&#39;]</span><br></pre></td></tr></table></figure>
+
+
+<ol start="3">
+<li>获取 <code>&lt;li&gt;</code> 标签下 href 为 link1.html 的 <code>&lt;a&gt;</code> 标签<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result &#x3D; html.xpath(&#39;&#x2F;&#x2F;li&#x2F;a[@href&#x3D;&quot;link1.html&quot;]&#39;)</span><br><span class="line">print (result)</span><br></pre></td></tr></table></figure>
+运行结果<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&lt;Element a at 0x10ffaae18&gt;]</span><br></pre></td></tr></table></figure></li>
+<li>获取<code>&lt;li&gt;</code>标签下的所有 <code>&lt;span&gt;</code> 标签</li>
+</ol>
+<p><strong>注意</strong>: 这么写是不对的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">result &#x3D; html.xpath(&#39;&#x2F;&#x2F;li&#x2F;span&#39;)</span><br><span class="line"></span><br><span class="line">#因为 &#x2F; 是用来获取子元素的，而 &lt;span&gt; 并不是 &lt;li&gt; 的子元素，所以，要用双斜杠</span><br><span class="line">result &#x3D; html.xpath(&#39;&#x2F;&#x2F;li&#x2F;&#x2F;span&#39;)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&lt;Element span at 0x10d698e18&gt;]</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>获取 <code>&lt;li&gt;</code> 标签下的所有 class，不包括<code>&lt;li&gt;</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">result &#x3D; html.xpath(&#39;&#x2F;&#x2F;li&#x2F;a&#x2F;&#x2F;@class&#39;)</span><br><span class="line">print (resul)t</span><br><span class="line">#运行结果</span><br><span class="line">[&#39;blod&#39;]</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>获取最后一个 <code>&lt;li&gt;</code> 的 <code>&lt;a&gt;</code> 的 href<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result &#x3D; html.xpath(&#39;&#x2F;&#x2F;li[last()]&#x2F;a&#x2F;@href&#39;)</span><br><span class="line">print (result)</span><br></pre></td></tr></table></figure>
+运行结果<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#39;link5.html&#39;]</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<ol start="7">
+<li><p>获取倒数第二个元素的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result &#x3D; html.xpath(&#39;&#x2F;&#x2F;li[last()-1]&#x2F;a&#39;)</span><br><span class="line">print (result[0].text)</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fourth item</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取 class 为 bold 的标签名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result &#x3D; html.xpath(&#39;&#x2F;&#x2F;*[@class&#x3D;&quot;bold&quot;]&#39;)</span><br><span class="line">print (result[0].tag)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">span</span><br></pre></td></tr></table></figure>
+
+<h4 id="选择XML文件中节点："><a href="#选择XML文件中节点：" class="headerlink" title="选择XML文件中节点："></a>选择XML文件中节点：</h4><ul>
+<li>element（元素节点）</li>
+<li>attribute（属性节点）</li>
+<li>text （文本节点）</li>
+<li>concat(元素节点,元素节点)</li>
+<li>comment （注释节点）</li>
+<li>root （根节点）</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='true'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-介绍"><span class="toc-number">1.</span> <span class="toc-text">1. 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-安装"><span class="toc-number">2.</span> <span class="toc-text">2. 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-XPath语法"><span class="toc-number">3.</span> <span class="toc-text">3. XPath语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-节点的关系"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 节点的关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-选取节点"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 选取节点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-1-常用的路径表达式"><span class="toc-number">3.2.1.</span> <span class="toc-text">3.2.1 常用的路径表达式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-2-通配符"><span class="toc-number">3.2.2.</span> <span class="toc-text">3.2.2 通配符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-3-选取若干路径"><span class="toc-number">3.2.3.</span> <span class="toc-text">3.2.3 选取若干路径</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-4-谓语"><span class="toc-number">3.2.4.</span> <span class="toc-text">3.2.4 谓语</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-5-XPath-运算符"><span class="toc-number">3.2.5.</span> <span class="toc-text">3.2.5 XPath 运算符</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-使用"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-1-小例子"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.3.1 小例子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-2-XPath具体使用"><span class="toc-number">3.3.2.</span> <span class="toc-text">3.3.2 XPath具体使用</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#选择XML文件中节点："><span class="toc-number">3.4.</span> <span class="toc-text">选择XML文件中节点：</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

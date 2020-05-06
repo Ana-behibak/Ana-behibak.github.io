@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>29. Scrapy 框架-分布式 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="1. 介绍scrapy-redis框架scrapy-redis
+
+一个三方的基于redis的分布式爬虫框架，配合scrapy使用，让爬虫具有了分布式爬取的功能。
+
+github地址：https://,"> 
+    <meta name="author" content="Jin Nian"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/Ana-behibak/Ana-behibak.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">29. Scrapy 框架-分布式</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">29. Scrapy 框架-分布式</h1>
+        <div class="stuff">
+            <span>一月 29, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="1-介绍scrapy-redis框架"><a href="#1-介绍scrapy-redis框架" class="headerlink" title="1. 介绍scrapy-redis框架"></a>1. 介绍scrapy-redis框架</h3><p>scrapy-redis</p>
+<blockquote>
+<p>一个三方的基于redis的分布式爬虫框架，配合scrapy使用，让爬虫具有了分布式爬取的功能。</p>
+</blockquote>
+<p>github地址：<br><a href="https://github.com/darkrho/scrapy-redis">https://github.com/darkrho/scrapy-redis</a></p>
+<h3 id="2-分布式原理"><a href="#2-分布式原理" class="headerlink" title="2. 分布式原理"></a>2. 分布式原理</h3><p>　scrapy-redis实现分布式，其实从原理上来说很简单，这里为描述方便，我们把自己的<strong>核心服务器</strong>称为<strong>master</strong>，而把用于<strong>跑爬虫程序</strong>的机器称为<strong>slave</strong></p>
+<p>我们知道，采用scrapy框架抓取网页，我们需要首先给定它一些start_urls，爬虫首先访问start_urls里面的url，再根据我们的具体逻辑，对里面的元素、或者是其他的二级、三级页面进行抓取。而要实现分布式，我们只需要在这个starts_urls里面做文章就行了</p>
+<p>我们在<strong>master</strong>上搭建一个<strong>redis数据库</strong>`（注意这个数据库只用作url的存储)，并对每一个需要爬取的网站类型，都开辟一个单独的列表字段。通过设置slave上scrapy-redis获取url的地址为master地址。这样的结果就是，<strong>尽管有多个slave，然而大家获取url的地方只有一个，那就是服务器master上的redis数据库</strong></p>
+<p>并且，由于scrapy-redis<strong>自身的队列机制</strong>，slave获取的链接不会相互冲突。这样各个slave在完成抓取任务之后，再把获取的结果汇总到服务器上</p>
+<p><strong>好处</strong></p>
+<p>程序移植性强，只要处理好路径问题，把slave上的程序移植到另一台机器上运行，基本上就是复制粘贴的事情</p>
+<h3 id="3-分布式爬虫的实现"><a href="#3-分布式爬虫的实现" class="headerlink" title="3.分布式爬虫的实现"></a>3.分布式爬虫的实现</h3><ol>
+<li><p>使用三台机器，一台是win10，两台是centos6，分别在两台机器上部署scrapy来进行分布式抓取一个网站</p>
+</li>
+<li><p>win10的ip地址为192.168.31.245，用来作为redis的master端，centos的机器作为slave</p>
+</li>
+<li><p>master的爬虫运行时会把提取到的url封装成request放到redis中的数据库：“dmoz:requests”，并且从该数据库中提取request后下载网页，再把网页的内容存放到redis的另一个数据库中“dmoz:items”</p>
+</li>
+<li><p>slave从master的redis中取出待抓取的request，下载完网页之后就把网页的内容发送回master的redis</p>
+</li>
+<li><p>重复上面的3和4，直到master的redis中的“dmoz:requests”数据库为空，再把master的redis中的“dmoz:items”数据库写入到mongodb中</p>
+</li>
+<li><p>master里的reids还有一个数据“dmoz:dupefilter”是用来存储抓取过的url的指纹（使用哈希函数将url运算后的结果），是防止重复抓取的</p>
+</li>
+</ol>
+<h3 id="4-scrapy-redis框架的安装"><a href="#4-scrapy-redis框架的安装" class="headerlink" title="4. scrapy-redis框架的安装"></a>4. scrapy-redis框架的安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install scrapy-redis</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-部署scrapy-redis"><a href="#5-部署scrapy-redis" class="headerlink" title="5. 部署scrapy-redis"></a>5. 部署scrapy-redis</h3><h4 id="5-1-slave端"><a href="#5-1-slave端" class="headerlink" title="5.1 slave端"></a>5.1 slave端</h4><blockquote>
+<p>在windows上的settings.py文件的最后增加如下一行</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">REDIS_HOST &#x3D; &#39;localhost&#39; #master IP</span><br><span class="line"></span><br><span class="line">REDIS_PORT &#x3D; 6379</span><br></pre></td></tr></table></figure>
+
+<p>配置好了远程的redis地址后启动两个爬虫（启动爬虫没有顺序限制）</p>
+<h4 id="6-给爬虫增加配置信息"><a href="#6-给爬虫增加配置信息" class="headerlink" title="6 给爬虫增加配置信息"></a>6 给爬虫增加配置信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DUPEFILTER_CLASS &#x3D; &quot;scrapy_redis.dupefilter.RFPDupeFilter&quot;</span><br><span class="line">SCHEDULER &#x3D; &quot;scrapy_redis.scheduler.Scheduler&quot;</span><br><span class="line">SCHEDULER_PERSIST &#x3D; True</span><br><span class="line">#SCHEDULER_QUEUE_CLASS &#x3D; &quot;scrapy_redis.queue.SpiderPriorityQueue&quot;</span><br><span class="line">#SCHEDULER_QUEUE_CLASS &#x3D; &quot;scrapy_redis.queue.SpiderQueue&quot;</span><br><span class="line">#SCHEDULER_QUEUE_CLASS &#x3D; &quot;scrapy_redis.queue.SpiderStack&quot;</span><br><span class="line"></span><br><span class="line">ITEM_PIPELINES &#x3D; &#123;</span><br><span class="line">    &#39;example.pipelines.ExamplePipeline&#39;: 300,</span><br><span class="line">    &#39;scrapy_redis.pipelines.RedisPipeline&#39;: 400,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-运行程序"><a href="#7-运行程序" class="headerlink" title="7 运行程序"></a>7 运行程序</h4><h5 id="7-1-运行slave"><a href="#7-1-运行slave" class="headerlink" title="7.1 运行slave"></a>7.1 运行slave</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy runspider 文件名.py</span><br></pre></td></tr></table></figure>
+<p>开起没有先后顺序</p>
+<h5 id="7-2-运行master"><a href="#7-2-运行master" class="headerlink" title="7.2 运行master"></a>7.2 运行master</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lpush (redis_key)  url #括号不用写</span><br></pre></td></tr></table></figure>
+<p><strong>说明</strong></p>
+<ul>
+<li>这个命令是在redis-cli中运行</li>
+<li>redis_key 是 spider.py文件中的redis_key的值</li>
+<li>url 开始爬取地址，不加双引号</li>
+</ul>
+<h4 id="8-数据导入到mongodb中"><a href="#8-数据导入到mongodb中" class="headerlink" title="8 数据导入到mongodb中"></a>8 数据导入到mongodb中</h4><p>等到爬虫结束后,如果要把数据存储到mongodb中，就应该修改master端process_items.py文件，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import redis</span><br><span class="line"></span><br><span class="line">import pymongo</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line"></span><br><span class="line">    r &#x3D; redis.Redis(host&#x3D;&#39;192.168.31.245&#39;,port&#x3D;6379,db&#x3D;0)</span><br><span class="line"></span><br><span class="line">    client &#x3D; pymongo.MongoClient(host&#x3D;&#39;localhost&#39;, port&#x3D;27017)</span><br><span class="line"></span><br><span class="line">    db &#x3D; client.dmoz</span><br><span class="line"></span><br><span class="line">    sheet &#x3D; db.sheet</span><br><span class="line"></span><br><span class="line">    while True:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        source, data &#x3D; r.blpop([&quot;dmoz:items&quot;])</span><br><span class="line"></span><br><span class="line">        item &#x3D; json.loads(data)</span><br><span class="line"></span><br><span class="line">        sheet.insert(item)</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line"></span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h4 id="9-数据导入到MySQL中"><a href="#9-数据导入到MySQL中" class="headerlink" title="9 数据导入到MySQL中"></a>9 数据导入到MySQL中</h4><p>等到爬虫结束后,如果要把数据存储到mongodb中，就应该修改master端process_items.py文件，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import redis</span><br><span class="line">import pymysql</span><br><span class="line">import json</span><br><span class="line">def process_item():</span><br><span class="line">    r_client &#x3D; redis.Redis(host&#x3D;&quot;127.0.0.1&quot;,port&#x3D;6379,db &#x3D;0)</span><br><span class="line">    m_client &#x3D; pymysql.connect(host&#x3D;&quot;127.0.0.1&quot;,port&#x3D;3306,user&#x3D;&quot;root&quot;,passowrd&#x3D;&quot;123456&quot;,db&#x3D;&quot;lianjia&quot;)</span><br><span class="line">    source,data &#x3D;r_client.blpop(&quot;lianjia:item&quot;)</span><br><span class="line">    item &#x3D; json.loads(data)</span><br><span class="line"></span><br><span class="line">    cursor &#x3D; m_client.cursor()</span><br><span class="line">    values &#x3D; []</span><br><span class="line">    cursor.execute(sql,values)</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='true'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-介绍scrapy-redis框架"><span class="toc-number">1.</span> <span class="toc-text">1. 介绍scrapy-redis框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-分布式原理"><span class="toc-number">2.</span> <span class="toc-text">2. 分布式原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-分布式爬虫的实现"><span class="toc-number">3.</span> <span class="toc-text">3.分布式爬虫的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-scrapy-redis框架的安装"><span class="toc-number">4.</span> <span class="toc-text">4. scrapy-redis框架的安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-部署scrapy-redis"><span class="toc-number">5.</span> <span class="toc-text">5. 部署scrapy-redis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-slave端"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 slave端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-给爬虫增加配置信息"><span class="toc-number">5.2.</span> <span class="toc-text">6 给爬虫增加配置信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-运行程序"><span class="toc-number">5.3.</span> <span class="toc-text">7 运行程序</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#7-1-运行slave"><span class="toc-number">5.3.1.</span> <span class="toc-text">7.1 运行slave</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-2-运行master"><span class="toc-number">5.3.2.</span> <span class="toc-text">7.2 运行master</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-数据导入到mongodb中"><span class="toc-number">5.4.</span> <span class="toc-text">8 数据导入到mongodb中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-数据导入到MySQL中"><span class="toc-number">5.5.</span> <span class="toc-text">9 数据导入到MySQL中</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

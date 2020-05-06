@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>19. Scrapy 数据的保存 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="1. 数据的提取1.1 控制台打印1234567891011121314151617import scrapyclass DoubanSpider(scrapy.Spider):    name &amp;,"> 
+    <meta name="author" content="Jin Nian"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/Ana-behibak/Ana-behibak.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">19. Scrapy 数据的保存</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">19. Scrapy 数据的保存</h1>
+        <div class="stuff">
+            <span>一月 19, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="1-数据的提取"><a href="#1-数据的提取" class="headerlink" title="1. 数据的提取"></a>1. 数据的提取</h3><h4 id="1-1-控制台打印"><a href="#1-1-控制台打印" class="headerlink" title="1.1 控制台打印"></a>1.1 控制台打印</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import scrapy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class DoubanSpider(scrapy.Spider):</span><br><span class="line">    name &#x3D; &#39;douban&#39;</span><br><span class="line">    allwed_url &#x3D; &#39;douban.com&#39;</span><br><span class="line">    start_urls &#x3D; [</span><br><span class="line">        &#39;https:&#x2F;&#x2F;movie.douban.com&#x2F;top250&#x2F;&#39;</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    def parse(self, response):</span><br><span class="line">        movie_name &#x3D; response.xpath(&quot;&#x2F;&#x2F;div[@class&#x3D;&#39;item&#39;]&#x2F;&#x2F;a&#x2F;span[1]&#x2F;text()&quot;).extract()</span><br><span class="line">        movie_core &#x3D; response.xpath(&quot;&#x2F;&#x2F;div[@class&#x3D;&#39;star&#39;]&#x2F;span[2]&#x2F;text()&quot;).extract()</span><br><span class="line">        yield &#123;</span><br><span class="line">            &#39;movie_name&#39;:movie_name,</span><br><span class="line">            &#39;movie_core&#39;:movie_core</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>执行以上代码，我可以在控制看到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2018-01-24 15:17:14 [scrapy.utils.log] INFO: Scrapy 1.5.0 started (bot: spiderdemo1)</span><br><span class="line">2018-01-24 15:17:14 [scrapy.utils.log] INFO: Versions: lxml 4.1.1.0, libxml2 2.9.5, cssselect 1.0.3, parsel 1.3.1, w3lib 1.18.0, Twiste</span><br><span class="line">d 17.9.0, Python 3.6.3 (v3.6.3:2c5fed8, Oct  3 2017, 18:11:49) [MSC v.1900 64 bit (AMD64)], pyOpenSSL 17.5.0 (OpenSSL 1.1.0g  2 Nov 201</span><br><span class="line">7), cryptography 2.1.4, Platform Windows-10-10.0.10240-SP0</span><br><span class="line">2018-01-24 15:17:14 [scrapy.crawler] INFO: Overridden settings: &#123;&#39;BOT_NAME&#39;: &#39;spiderdemo1&#39;, &#39;NEWSPIDER_MODULE&#39;: &#39;spiderdemo1.spiders&#39;,</span><br><span class="line">&#39;ROBOTSTXT_OBEY&#39;: True, &#39;SPIDER_MODULES&#39;: [&#39;spiderdemo1.spiders&#39;]&#125;</span><br><span class="line">2018-01-24 15:17:14 [scrapy.middleware] INFO: Enabled extensions:</span><br><span class="line">[&#39;scrapy.extensions.corestats.CoreStats&#39;,</span><br><span class="line"> &#39;scrapy.extensions.telnet.TelnetConsole&#39;,</span><br><span class="line"> &#39;scrapy.extensions.logstats.LogStats&#39;]</span><br><span class="line">2018-01-24 15:17:14 [scrapy.middleware] INFO: Enabled downloader middlewares:</span><br><span class="line">[&#39;scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.downloadermiddlewares.useragent.UserAgentMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.downloadermiddlewares.retry.RetryMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.downloadermiddlewares.redirect.RedirectMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.downloadermiddlewares.cookies.CookiesMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.downloadermiddlewares.stats.DownloaderStats&#39;]</span><br><span class="line">2018-01-24 15:17:14 [scrapy.middleware] INFO: Enabled spider middlewares:</span><br><span class="line">[&#39;scrapy.spidermiddlewares.httperror.HttpErrorMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.spidermiddlewares.offsite.OffsiteMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.spidermiddlewares.referer.RefererMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.spidermiddlewares.urllength.UrlLengthMiddleware&#39;,</span><br><span class="line"> &#39;scrapy.spidermiddlewares.depth.DepthMiddleware&#39;]</span><br><span class="line">2018-01-24 15:17:14 [scrapy.middleware] INFO: Enabled item pipelines:</span><br><span class="line">[]</span><br><span class="line">2018-01-24 15:17:14 [scrapy.core.engine] INFO: Spider opened</span><br><span class="line">2018-01-24 15:17:14 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages&#x2F;min), scraped 0 items (at 0 items&#x2F;min)</span><br><span class="line">2018-01-24 15:17:14 [scrapy.extensions.telnet] DEBUG: Telnet console listening on 127.0.0.1:6023</span><br><span class="line">2018-01-24 15:17:14 [scrapy.core.engine] DEBUG: Crawled (200) &lt;GET https:&#x2F;&#x2F;movie.douban.com&#x2F;robots.txt&gt; (referer: None)</span><br><span class="line">2018-01-24 15:17:15 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301) to &lt;GET https:&#x2F;&#x2F;movie.douban.com&#x2F;top250&gt; from &lt;GET</span><br><span class="line"> https:&#x2F;&#x2F;movie.douban.com&#x2F;top250&#x2F;&gt;</span><br><span class="line">2018-01-24 15:17:15 [scrapy.core.engine] DEBUG: Crawled (200) &lt;GET https:&#x2F;&#x2F;movie.douban.com&#x2F;top250&gt; (referer: None)</span><br><span class="line">2018-01-24 15:17:15 [scrapy.core.scraper] DEBUG: Scraped from &lt;200 https:&#x2F;&#x2F;movie.douban.com&#x2F;top250&gt;</span><br><span class="line">&#123;&#39;movie_name&#39;: [&#39;肖申克的救赎&#39;, &#39;霸王别姬&#39;, &#39;这个杀手不太冷&#39;, &#39;阿甘正传&#39;, &#39;美丽人生&#39;, &#39;千与千寻&#39;, &#39;泰坦尼克号&#39;, &#39;辛德勒的名单&#39;, &#39;盗梦空</span><br><span class="line">间&#39;, &#39;机器人总动员&#39;, &#39;海上钢琴师&#39;, &#39;三傻大闹宝莱坞&#39;, &#39;忠犬八公的故事&#39;, &#39;放牛班的春天&#39;, &#39;大话西游之大圣娶亲&#39;, &#39;教父&#39;, &#39;龙猫&#39;, &#39;楚门的世</span><br><span class="line">界&#39;, &#39;乱世佳人&#39;, &#39;熔炉&#39;, &#39;触不可及&#39;, &#39;天堂电影院&#39;, &#39;当幸福来敲门&#39;, &#39;无间道&#39;, &#39;星际穿越&#39;], &#39;movie_core&#39;: [&#39;9.6&#39;, &#39;9.5&#39;, &#39;9.4&#39;, &#39;9.4&#39;, &#39;9</span><br><span class="line">.5&#39;, &#39;9.2&#39;, &#39;9.2&#39;, &#39;9.4&#39;, &#39;9.3&#39;, &#39;9.3&#39;, &#39;9.2&#39;, &#39;9.1&#39;, &#39;9.2&#39;, &#39;9.2&#39;, &#39;9.2&#39;, &#39;9.2&#39;, &#39;9.1&#39;, &#39;9.1&#39;, &#39;9.2&#39;, &#39;9.2&#39;, &#39;9.1&#39;, &#39;9.1&#39;, &#39;8.9&#39;, &#39;9.0</span><br><span class="line">&#39;, &#39;9.1&#39;]&#125;</span><br><span class="line">2018-01-24 15:17:15 [scrapy.core.engine] INFO: Closing spider (finished)</span><br><span class="line">2018-01-24 15:17:15 [scrapy.statscollectors] INFO: Dumping Scrapy stats:</span><br><span class="line">&#123;&#39;downloader&#x2F;request_bytes&#39;: 651,</span><br><span class="line"> &#39;downloader&#x2F;request_count&#39;: 3,</span><br><span class="line"> &#39;downloader&#x2F;request_method_count&#x2F;GET&#39;: 3,</span><br><span class="line"> &#39;downloader&#x2F;response_bytes&#39;: 13900,</span><br><span class="line"> &#39;downloader&#x2F;response_count&#39;: 3,</span><br><span class="line"> &#39;downloader&#x2F;response_status_count&#x2F;200&#39;: 2,</span><br><span class="line"> &#39;downloader&#x2F;response_status_count&#x2F;301&#39;: 1,</span><br><span class="line"> &#39;finish_reason&#39;: &#39;finished&#39;,</span><br><span class="line"> &#39;finish_time&#39;: datetime.datetime(2018, 1, 24, 7, 17, 15, 247183),</span><br><span class="line"> &#39;item_scraped_count&#39;: 1,</span><br><span class="line"> &#39;log_count&#x2F;DEBUG&#39;: 5,</span><br><span class="line"> &#39;log_count&#x2F;INFO&#39;: 7,</span><br><span class="line"> &#39;response_received_count&#39;: 2,</span><br><span class="line"> &#39;scheduler&#x2F;dequeued&#39;: 2,</span><br><span class="line"> &#39;scheduler&#x2F;dequeued&#x2F;memory&#39;: 2,</span><br><span class="line"> &#39;scheduler&#x2F;enqueued&#39;: 2,</span><br><span class="line"> &#39;scheduler&#x2F;enqueued&#x2F;memory&#39;: 2,</span><br><span class="line"> &#39;start_time&#39;: datetime.datetime(2018, 1, 24, 7, 17, 14, 784782)&#125;</span><br><span class="line">2018-01-24 15:17:15 [scrapy.core.engine] INFO: Spider closed (finished)</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-以文件的方式输出"><a href="#1-2-以文件的方式输出" class="headerlink" title="1.2 以文件的方式输出"></a>1.2 以文件的方式输出</h4><h5 id="1-2-1-python原生方式"><a href="#1-2-1-python原生方式" class="headerlink" title="1.2.1 python原生方式"></a>1.2.1 python原生方式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">with open(&quot;movie.txt&quot;, &#39;wb&#39;) as f:</span><br><span class="line">    for n, c in zip(movie_name, movie_core):</span><br><span class="line">        str &#x3D; n+&quot;:&quot;+c+&quot;\n&quot;</span><br><span class="line">        f.write(str.encode())</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-2-2-以scrapy内置方式"><a href="#1-2-2-以scrapy内置方式" class="headerlink" title="1.2.2 以scrapy内置方式"></a>1.2.2 以scrapy内置方式</h5><p>scrapy 内置主要有四种：JSON，JSON lines，CSV，XML</p>
+<p>我们将结果用最常用的JSON导出，命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl dmoz -o douban.json -t json</span><br></pre></td></tr></table></figure>
+<p>-o 后面是导出文件名，-t 后面是导出类型</p>
+<h4 id="2-提取内容的封装Item"><a href="#2-提取内容的封装Item" class="headerlink" title="2 提取内容的封装Item"></a>2 提取内容的封装Item</h4><blockquote>
+<p>Scrapy进程可通过使用蜘蛛提取来自网页中的数据。Scrapy使用Item类生成输出对象用于收刮数据</p>
+</blockquote>
+<blockquote>
+<p>Item 对象是自定义的python字典，可以使用标准字典语法获取某个属性的值</p>
+</blockquote>
+<h5 id="2-1-定义"><a href="#2-1-定义" class="headerlink" title="2.1 定义"></a>2.1 定义</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import scrapy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class InfoItem(scrapy.Item):</span><br><span class="line">    # define the fields for your item here like:</span><br><span class="line">    movie_name &#x3D; scrapy.Field()</span><br><span class="line">    movie_core &#x3D; scrapy.Field()</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-使用"><a href="#2-2-使用" class="headerlink" title="2.2 使用"></a>2.2 使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def parse(self, response):</span><br><span class="line">    movie_name &#x3D; response.xpath(&quot;&#x2F;&#x2F;div[@class&#x3D;&#39;item&#39;]&#x2F;&#x2F;a&#x2F;span[1]&#x2F;text()&quot;).extract()</span><br><span class="line">    movie_core &#x3D; response.xpath(&quot;&#x2F;&#x2F;div[@class&#x3D;&#39;star&#39;]&#x2F;span[2]&#x2F;text()&quot;).extract()</span><br><span class="line">    </span><br><span class="line">    for n, c in zip(movie_name, movie_core):</span><br><span class="line">        movie &#x3D; InfoItem()</span><br><span class="line">        movie[&#39;movie_name&#39;] &#x3D; n</span><br><span class="line">        movie[&#39;movie_core&#39;] &#x3D; c</span><br><span class="line">        yield movie</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='true'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-数据的提取"><span class="toc-number">1.</span> <span class="toc-text">1. 数据的提取</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-控制台打印"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 控制台打印</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-以文件的方式输出"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 以文件的方式输出</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-1-python原生方式"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 python原生方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-2-以scrapy内置方式"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 以scrapy内置方式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-提取内容的封装Item"><span class="toc-number">1.3.</span> <span class="toc-text">2 提取内容的封装Item</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-定义"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-使用"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 使用</span></a></li></ol></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

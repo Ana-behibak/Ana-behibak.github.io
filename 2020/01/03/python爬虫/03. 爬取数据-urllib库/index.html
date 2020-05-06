@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>03. 爬取数据-urllib库 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="1. 小试牛刀怎样扒网页呢？
+其实就是根据URL来获取它的网页信息，虽然我们在浏览器中看到的是一幅幅优美的画面，但是其实是由浏览器解释才呈现出来的，实质它是一段HTML代码，加 JS、CSS，如果把,"> 
+    <meta name="author" content="Jin Nian"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/Ana-behibak/Ana-behibak.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">03. 爬取数据-urllib库</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">03. 爬取数据-urllib库</h1>
+        <div class="stuff">
+            <span>一月 03, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="1-小试牛刀"><a href="#1-小试牛刀" class="headerlink" title="1. 小试牛刀"></a>1. 小试牛刀</h3><p>怎样扒网页呢？</p>
+<p>其实就是根据URL来获取它的网页信息，虽然我们在浏览器中看到的是一幅幅优美的画面，但是其实是由浏览器解释才呈现出来的，实质它是一段HTML代码，加 JS、CSS，如果把网页比作一个人，那么HTML便是他的骨架，JS便是他的肌肉，CSS便是它的衣服。所以最重要的部分是存在于HTML中的，下面我们就写个例子来扒一个网页下来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from urllib.request import urlopen</span><br><span class="line"> </span><br><span class="line">response &#x3D; urlopen(&quot;http:&#x2F;&#x2F;www.baidu.com&quot;)</span><br><span class="line">print(response.read().decode())</span><br></pre></td></tr></table></figure>
+<p>真正的程序就两行，执行如下命令查看运行结果，感受一下</p>
+<p>看，这个网页的源码已经被我们扒下来了，是不是很酸爽？</p>
+<hr>
+<h3 id="2-常见到的方法"><a href="#2-常见到的方法" class="headerlink" title="2. 常见到的方法"></a>2. 常见到的方法</h3><ul>
+<li><p>requset.urlopen(url,data,timeout)</p>
+<ul>
+<li><p>第一个参数url即为URL，第二个参数data是访问URL时要传送的数据，第三个timeout是设置超时时间。</p>
+</li>
+<li><p>第二三个参数是可以不传送的，data默认为空None，timeout默认为 socket._GLOBAL_DEFAULT_TIMEOUT</p>
+</li>
+<li><p>第一个参数URL是必须要传送的，在这个例子里面我们传送了百度的URL，执行urlopen方法之后，返回一个response对象，返回信息便保存在这里面。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>response.read()</p>
+<ul>
+<li>read()方法就是读取文件里的全部内容，返回bytes类型</li>
+</ul>
+</li>
+<li><p>response.getcode()</p>
+<ul>
+<li>返回 HTTP的响应码，成功返回200，4服务器页面出错，5服务器问题</li>
+</ul>
+</li>
+<li><p>response.geturl()</p>
+<ul>
+<li>返回 返回实际数据的实际URL，防止重定向问题</li>
+</ul>
+</li>
+<li><p>response.info()</p>
+<ul>
+<li>返回 服务器响应的HTTP报头</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-Request对象"><a href="#3-Request对象" class="headerlink" title="3. Request对象"></a>3. Request对象</h3><p> 其实上面的urlopen参数可以传入一个request请求,它其实就是一个Request类的实例，构造时需要传入Url,Data等等的内容。比如上面的两行代码，我们可以这么改写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from urllib.request import urlopen</span><br><span class="line">from urllib.request import Request</span><br><span class="line"></span><br><span class="line">request &#x3D; Request(&quot;http:&#x2F;&#x2F;www.baidu.com&quot;)</span><br><span class="line">response &#x3D; urlopen(requst)</span><br><span class="line">print response.read().decode()</span><br></pre></td></tr></table></figure>
+
+<p>运行结果是完全一样的，只不过中间多了一个request对象，推荐大家这么写，因为在构建请求时还需要加入好多内容，通过构建一个request，服务器响应请求得到应答，这样显得逻辑上清晰明确</p>
+<hr>
+<h3 id="4-Get-请求"><a href="#4-Get-请求" class="headerlink" title="4. Get 请求"></a>4. Get 请求</h3><p>大部分被传输到浏览器的html，images，js，css, … 都是通过GET方法发出请求的。它是获取数据的主要方法</p>
+<p>例如：<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 搜索</p>
+<p>Get请求的参数都是在Url中体现的,如果有中文，需要转码，这时我们可使用</p>
+<ul>
+<li><p>urllib.parse.urlencode()</p>
+</li>
+<li><p>urllib.parse. quote()</p>
+</li>
+</ul>
+<h3 id="5-Post-请求"><a href="#5-Post-请求" class="headerlink" title="5. Post 请求"></a>5. Post 请求</h3><p>我们说了Request请求对象的里有data参数，它就是用在POST里的，我们要传送的数据就是这个参数data，data是一个字典，里面要匹配键值对</p>
+<p>发送请求/响应header头的含义：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Accept</td>
+<td>告诉服务器，客户端支持的数据类型</td>
+</tr>
+<tr>
+<td>Accept-Charset</td>
+<td>告诉服务器，客户端采用的编码</td>
+</tr>
+<tr>
+<td>Accept-Encoding</td>
+<td>告诉服务器，客户机支持的数据压缩格式</td>
+</tr>
+<tr>
+<td>Accept-Language</td>
+<td>告诉服务器，客户机的语言环境</td>
+</tr>
+<tr>
+<td>Host</td>
+<td>客户机通过这个头告诉服务器，想访问的主机名</td>
+</tr>
+<tr>
+<td>If-Modified-Since</td>
+<td>客户机通过这个头告诉服务器，资源的缓存时间</td>
+</tr>
+<tr>
+<td>Referer</td>
+<td>客户机通过这个头告诉服务器，它是从哪个资源来访问服务器的。（一般用于防盗链）</td>
+</tr>
+<tr>
+<td>User-Agent</td>
+<td>客户机通过这个头告诉服务器，客户机的软件环境</td>
+</tr>
+<tr>
+<td>Cookie</td>
+<td>客户机通过这个头告诉服务器，可以向服务器带数据</td>
+</tr>
+<tr>
+<td>Refresh</td>
+<td>服务器通过这个头，告诉浏览器隔多长时间刷新一次</td>
+</tr>
+<tr>
+<td>Content-Type</td>
+<td>服务器通过这个头，回送数据的类型</td>
+</tr>
+<tr>
+<td>Content-Language</td>
+<td>服务器通过这个头，告诉服务器的语言环境</td>
+</tr>
+<tr>
+<td>Server</td>
+<td>服务器通过这个头，告诉浏览器服务器的类型</td>
+</tr>
+<tr>
+<td>Content-Encoding</td>
+<td>服务器通过这个头，告诉浏览器数据采用的压缩格式</td>
+</tr>
+<tr>
+<td>Content-Length</td>
+<td>服务器通过这个头，告诉浏览器回送数据的长度</td>
+</tr>
+</tbody></table>
+<h3 id="6-响应的编码"><a href="#6-响应的编码" class="headerlink" title="6. 响应的编码"></a>6. 响应的编码</h3><p>响应状态码</p>
+<p>响应状态代码有三位数字组成，第一个数字定义了响应的类别，且有五种可能取值。<br>常见状态码：</p>
+<table>
+<thead>
+<tr>
+<th>号码</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>100~199</td>
+<td>表示服务器成功接收部分请求，要求客户端继续提交其余请求才能完成整个处理过程</td>
+</tr>
+<tr>
+<td>200~299</td>
+<td>表示服务器成功接收请求并已完成整个处理过程。常用200（OK 请求成功）</td>
+</tr>
+<tr>
+<td>300~399</td>
+<td>为完成请求，客户需进一步细化请求。例如：请求的资源已经移动一个新地址、常用302（所请求的页面已经临时转移至新的url）、307和304（使用缓存资源）</td>
+</tr>
+<tr>
+<td>400~499</td>
+<td>客户端的请求有错误，常用404（服务器无法找到被请求的页面）、403（服务器拒绝访问，权限不够）</td>
+</tr>
+<tr>
+<td>500~599</td>
+<td>服务器端出现错误，常用500（请求未完成。服务器遇到不可预知的情况）</td>
+</tr>
+</tbody></table>
+<h3 id="7-Ajax的请求获取数据"><a href="#7-Ajax的请求获取数据" class="headerlink" title="7. Ajax的请求获取数据"></a>7. Ajax的请求获取数据</h3><p>有些网页内容使用AJAX加载，而AJAX一般返回的是JSON,直接对AJAX地址进行post或get，就返回JSON数据了</p>
+<h3 id="8-请求-SSL证书验证"><a href="#8-请求-SSL证书验证" class="headerlink" title="8. 请求 SSL证书验证"></a>8. 请求 SSL证书验证</h3><p>现在随处可见 https 开头的网站，urllib可以为 HTTPS 请求验证SSL证书，就像web浏览器一样，如果网站的SSL证书是经过CA认证的，则能够正常访问，如：<a href="https://www.baidu.com/" target="_blank" rel="noopener">https://www.baidu.com/</a></p>
+<p>如果SSL证书验证不通过，或者操作系统不信任服务器的安全证书，比如浏览器在访问12306网站如：<a href="https://www.12306.cn/mormhweb/的时候，会警告用户证书不受信任。（据说" target="_blank" rel="noopener">https://www.12306.cn/mormhweb/的时候，会警告用户证书不受信任。（据说</a> 12306 网站证书是自己做的，没有通过CA认证）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 忽略SSL安全认证</span><br><span class="line">context &#x3D; ssl._create_unverified_context()</span><br><span class="line"># 添加到context参数里</span><br><span class="line">response &#x3D; urllib.request.urlopen(request, context &#x3D; context)</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='true'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-小试牛刀"><span class="toc-number">1.</span> <span class="toc-text">1. 小试牛刀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-常见到的方法"><span class="toc-number">2.</span> <span class="toc-text">2. 常见到的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Request对象"><span class="toc-number">3.</span> <span class="toc-text">3. Request对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Get-请求"><span class="toc-number">4.</span> <span class="toc-text">4. Get 请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Post-请求"><span class="toc-number">5.</span> <span class="toc-text">5. Post 请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-响应的编码"><span class="toc-number">6.</span> <span class="toc-text">6. 响应的编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Ajax的请求获取数据"><span class="toc-number">7.</span> <span class="toc-text">7. Ajax的请求获取数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-请求-SSL证书验证"><span class="toc-number">8.</span> <span class="toc-text">8. 请求 SSL证书验证</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

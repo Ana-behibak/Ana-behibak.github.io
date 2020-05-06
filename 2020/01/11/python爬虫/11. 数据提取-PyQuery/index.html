@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>11. 数据提取-PyQuery - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="1. pyquery1.1 介绍
+如果你对CSS选择器与Jquery有有所了解，那么还有个解析库可以适合你–Jquery
+
+
+官网https://pythonhosted.org/pyquery/
+,"> 
+    <meta name="author" content="Jin Nian"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/Ana-behibak/Ana-behibak.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">11. 数据提取-PyQuery</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">11. 数据提取-PyQuery</h1>
+        <div class="stuff">
+            <span>一月 11, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="1-pyquery"><a href="#1-pyquery" class="headerlink" title="1. pyquery"></a>1. pyquery</h3><h4 id="1-1-介绍"><a href="#1-1-介绍" class="headerlink" title="1.1 介绍"></a>1.1 介绍</h4><blockquote>
+<p>如果你对CSS选择器与Jquery有有所了解，那么还有个解析库可以适合你–Jquery</p>
+</blockquote>
+<blockquote>
+<p><a href="https://pythonhosted.org/pyquery/" target="_blank" rel="noopener">官网</a><a href="https://pythonhosted.org/pyquery/" target="_blank" rel="noopener">https://pythonhosted.org/pyquery/</a></p>
+</blockquote>
+<h4 id="1-2-安装"><a href="#1-2-安装" class="headerlink" title="1.2 安装"></a>1.2 安装</h4><blockquote>
+<p>pip install pyquery</p>
+</blockquote>
+<h4 id="1-3-使用方式"><a href="#1-3-使用方式" class="headerlink" title="1.3 使用方式"></a>1.3 使用方式</h4><h5 id="1-3-1-初始化方式"><a href="#1-3-1-初始化方式" class="headerlink" title="1.3.1 初始化方式"></a>1.3.1 初始化方式</h5><ul>
+<li>字符串<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pyquery import PyQuery as pq</span><br><span class="line">doc &#x3D; pq(str)</span><br><span class="line">print(doc(tagname))</span><br></pre></td></tr></table></figure></li>
+<li>url<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pyquery import PyQuery as pq</span><br><span class="line">doc &#x3D; pq(url&#x3D;&#39;http:&#x2F;&#x2F;www.baidu.com&#39;)</span><br><span class="line">print(doc(&#39;title&#39;))</span><br></pre></td></tr></table></figure></li>
+<li>文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pyquery import PyQuery as pq</span><br><span class="line">doc &#x3D; pq(filename&#x3D;&#39;demo.html&#39;)</span><br><span class="line">print(doc(tagname))</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h5 id="1-3-2-选择节点"><a href="#1-3-2-选择节点" class="headerlink" title="1.3.2 选择节点"></a>1.3.2 选择节点</h5><ul>
+<li>获取当前节点<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pyquery import PyQuery as pq</span><br><span class="line">doc &#x3D; pq(filename&#x3D;&#39;demo.html&#39;)</span><br><span class="line">doc(&#39;#main #top&#39;)</span><br></pre></td></tr></table></figure></li>
+<li>获取子节点<ul>
+<li>在doc中一层层写出来</li>
+<li>获取到父标签后使用children方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pyquery import PyQuery as pq</span><br><span class="line">doc &#x3D; pq(filename&#x3D;&#39;demo.html&#39;)</span><br><span class="line">doc(&#39;#main #top&#39;).children()</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>获取父节点<ul>
+<li>获取到当前节点后使用parent方法</li>
+</ul>
+</li>
+<li>获取兄弟节点<ul>
+<li>获取到当前节点后使用siblings方法<h5 id="1-3-3-获取属性"><a href="#1-3-3-获取属性" class="headerlink" title="1.3.3 获取属性"></a>1.3.3 获取属性</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from pyquery import PyQuery as pq</span><br><span class="line">doc &#x3D; pq(filename&#x3D;&#39;demo.html&#39;)</span><br><span class="line">a &#x3D; doc(&#39;#main #top&#39;)</span><br><span class="line">print(a.attrib[&#39;href&#39;])</span><br></pre></td></tr></table></figure>
+<h5 id="1-3-4-获取内容"><a href="#1-3-4-获取内容" class="headerlink" title="1.3.4 获取内容"></a>1.3.4 获取内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from pyquery import PyQuery as pq</span><br><span class="line">doc &#x3D; pq(filename&#x3D;&#39;demo.html&#39;)</span><br><span class="line">div &#x3D; doc(&#39;#main #top&#39;)</span><br><span class="line">print(a.html())</span><br><span class="line">print(a.text())</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="1-3-5-样例"><a href="#1-3-5-样例" class="headerlink" title="1.3.5 样例"></a>1.3.5 样例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from pyquery import PyQuery as pq</span><br><span class="line"># 1.可加载一段HTML字符串，或一个HTML文件，或是一个url地址，</span><br><span class="line">d&#x3D;pq(&quot;&lt;html&gt;&lt;title&gt;hello&lt;&#x2F;title&gt;&lt;&#x2F;html&gt;&quot;)</span><br><span class="line">d&#x3D;pq(filename&#x3D;path_to_html_file)</span><br><span class="line">d&#x3D;pq(url&#x3D;&#39;http:&#x2F;&#x2F;www.baidu.com&#39;)注意：此处url似乎必须写全</span><br><span class="line"> </span><br><span class="line"># 2.html()和text() ——获取相应的HTML块或文本块，</span><br><span class="line">p&#x3D;pq(&quot;&lt;head&gt;&lt;title&gt;hello&lt;&#x2F;title&gt;&lt;&#x2F;head&gt;&quot;)</span><br><span class="line">p(&#39;head&#39;).html()#返回&lt;title&gt;hello&lt;&#x2F;title&gt;</span><br><span class="line">p(&#39;head&#39;).text()#返回hello</span><br><span class="line"> </span><br><span class="line"># 3.根据HTML标签来获取元素，</span><br><span class="line">d&#x3D;pq(&#39;&lt;div&gt;&lt;p&gt;test 1&lt;&#x2F;p&gt;&lt;p&gt;test 2&lt;&#x2F;p&gt;&lt;&#x2F;div&gt;&#39;)</span><br><span class="line">d(&#39;p&#39;)#返回[&lt;p&gt;,&lt;p&gt;]</span><br><span class="line">print d(&#39;p&#39;)#返回&lt;p&gt;test 1&lt;&#x2F;p&gt;&lt;p&gt;test 2&lt;&#x2F;p&gt;</span><br><span class="line">print d(&#39;p&#39;).html()#返回test 1</span><br><span class="line"># 注意：当获取到的元素不只一个时，html()方法只返回首个元素的相应内容块</span><br><span class="line"> </span><br><span class="line"># 4.eq(index) ——根据给定的索引号得到指定元素。接上例，若想得到第二个p标签内的内容，则可以：</span><br><span class="line">print d(&#39;p&#39;).eq(1).html() #返回test 2</span><br><span class="line"> </span><br><span class="line"># 5.filter() ——根据类名、id名得到指定元素，例：</span><br><span class="line">d&#x3D;pq(&quot;&lt;div&gt;&lt;p id&#x3D;&#39;1&#39;&gt;test 1&lt;&#x2F;p&gt;&lt;p class&#x3D;&#39;2&#39;&gt;test 2&lt;&#x2F;p&gt;&lt;&#x2F;div&gt;&quot;)</span><br><span class="line">d(&#39;p&#39;).filter(&#39;#1&#39;) #返回[&lt;p#1&gt;]</span><br><span class="line">d(&#39;p&#39;).filter(&#39;.2&#39;) #返回[&lt;p.2&gt;]</span><br><span class="line"> </span><br><span class="line"># 6.find() ——查找嵌套元素，例：</span><br><span class="line">d&#x3D;pq(&quot;&lt;div&gt;&lt;p id&#x3D;&#39;1&#39;&gt;test 1&lt;&#x2F;p&gt;&lt;p class&#x3D;&#39;2&#39;&gt;test 2&lt;&#x2F;p&gt;&lt;&#x2F;div&gt;&quot;)</span><br><span class="line">d(&#39;div&#39;).find(&#39;p&#39;)#返回[&lt;p#1&gt;, &lt;p.2&gt;]</span><br><span class="line">d(&#39;div&#39;).find(&#39;p&#39;).eq(0)#返回[&lt;p#1&gt;]</span><br><span class="line"> </span><br><span class="line">#7.直接根据类名、id名获取元素，例：</span><br><span class="line">d&#x3D;pq(&quot;&lt;div&gt;&lt;p id&#x3D;&#39;1&#39;&gt;test 1&lt;&#x2F;p&gt;&lt;p class&#x3D;&#39;2&#39;&gt;test 2&lt;&#x2F;p&gt;&lt;&#x2F;div&gt;&quot;)</span><br><span class="line">d(&#39;#1&#39;).html()#返回test 1</span><br><span class="line">d(&#39;.2&#39;).html()#返回test 2</span><br><span class="line"> </span><br><span class="line"># 8.获取属性值，例：</span><br><span class="line">d&#x3D;pq(&quot;&lt;p id&#x3D;&#39;my_id&#39;&gt;&lt;a href&#x3D;&#39;http:&#x2F;&#x2F;hello.com&#39;&gt;hello&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;&quot;)</span><br><span class="line">d(&#39;a&#39;).attr(&#39;href&#39;)#返回http:&#x2F;&#x2F;hello.com</span><br><span class="line">d(&#39;p&#39;).attr(&#39;id&#39;)#返回my_id</span><br><span class="line"> </span><br><span class="line"># 9.修改属性值，例：</span><br><span class="line">d(&#39;a&#39;).attr(&#39;href&#39;, &#39;http:&#x2F;&#x2F;baidu.com&#39;)把href属性修改为了baidu</span><br><span class="line"> </span><br><span class="line"># 10.addClass(value) ——为元素添加类，例：</span><br><span class="line">d&#x3D;pq(&#39;&lt;div&gt;&lt;&#x2F;div&gt;&#39;)</span><br><span class="line">d.addClass(&#39;my_class&#39;)#返回[&lt;div.my_class&gt;]</span><br><span class="line"> </span><br><span class="line"># 11.hasClass(name) #返回判断元素是否包含给定的类，例：</span><br><span class="line">d&#x3D;pq(&quot;&lt;div class&#x3D;&#39;my_class&#39;&gt;&lt;&#x2F;div&gt;&quot;)</span><br><span class="line">d.hasClass(&#39;my_class&#39;)#返回True</span><br><span class="line"> </span><br><span class="line"># 12.children(selector&#x3D;None) ——获取子元素，例：</span><br><span class="line">d&#x3D;pq(&quot;&lt;span&gt;&lt;p id&#x3D;&#39;1&#39;&gt;hello&lt;&#x2F;p&gt;&lt;p id&#x3D;&#39;2&#39;&gt;world&lt;&#x2F;p&gt;&lt;&#x2F;span&gt;&quot;)</span><br><span class="line">d.children()#返回[&lt;p#1&gt;, &lt;p#2&gt;]</span><br><span class="line">d.children(&#39;#2&#39;)#返回[&lt;p#2&gt;]</span><br><span class="line"> </span><br><span class="line"># 13.parents(selector&#x3D;None)——获取父元素，例：</span><br><span class="line">d&#x3D;pq(&quot;&lt;span&gt;&lt;p id&#x3D;&#39;1&#39;&gt;hello&lt;&#x2F;p&gt;&lt;p id&#x3D;&#39;2&#39;&gt;world&lt;&#x2F;p&gt;&lt;&#x2F;span&gt;&quot;)</span><br><span class="line">d(&#39;p&#39;).parents()#返回[&lt;span&gt;]</span><br><span class="line">d(&#39;#1&#39;).parents(&#39;span&#39;)#返回[&lt;span&gt;]</span><br><span class="line">d(&#39;#1&#39;).parents(&#39;p&#39;)#返回[]</span><br><span class="line"> </span><br><span class="line"># 14.clone() ——返回一个节点的拷贝</span><br><span class="line"> </span><br><span class="line">#15.empty() ——移除节点内容</span><br><span class="line"> </span><br><span class="line"># 16.nextAll(selector&#x3D;None) ——返回后面全部的元素块，例：</span><br><span class="line">d&#x3D;pq(&quot;&lt;p id&#x3D;&#39;1&#39;&gt;hello&lt;&#x2F;p&gt;&lt;p id&#x3D;&#39;2&#39;&gt;world&lt;&#x2F;p&gt;&lt;img scr&#x3D;&#39;&#39; &#x2F;&gt;&quot;)</span><br><span class="line">d(&#39;p:first&#39;).nextAll()#返回[&lt;p#2&gt;, &lt;img&gt;]</span><br><span class="line">d(&#39;p:last&#39;).nextAll()#返回[&lt;img&gt;]</span><br><span class="line"> </span><br><span class="line"># 17.not_(selector) ——返回不匹配选择器的元素，例：</span><br><span class="line">d&#x3D;pq(&quot;&lt;p id&#x3D;&#39;1&#39;&gt;test 1&lt;&#x2F;p&gt;&lt;p id&#x3D;&#39;2&#39;&gt;test 2&lt;&#x2F;p&gt;&quot;)</span><br><span class="line">d(&#39;p&#39;).not_(&#39;#2&#39;)#返回[&lt;p#1&gt;]</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='true'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-pyquery"><span class="toc-number">1.</span> <span class="toc-text">1. pyquery</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-介绍"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-安装"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-使用方式"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 使用方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-1-初始化方式"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.3.1 初始化方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-2-选择节点"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.3.2 选择节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-3-获取属性"><span class="toc-number">1.3.3.</span> <span class="toc-text">1.3.3 获取属性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-4-获取内容"><span class="toc-number">1.3.4.</span> <span class="toc-text">1.3.4 获取内容</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-5-样例"><span class="toc-number">1.3.5.</span> <span class="toc-text">1.3.5 样例</span></a></li></ol></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
